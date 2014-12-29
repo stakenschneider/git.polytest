@@ -39,12 +39,18 @@ for(int i=0; i<j; i++)
 	{
 		swap(mass[i],mass[q]);
         swap(mass[i-1],mass[q-1]);
-
+	} else if(mass[q]==mass[i])
+	{
+		if  (mass[i-1]>mass[q-1]){
+			swap(mass[i],mass[q]);
+			swap(mass[i-1],mass[q-1]);
+		}
 	}
 
- for(int i=0; i<j; ++i)
-    fout<<mass[i]<<" ";
- 
+ for(int i=0; i<j-1; i=i+2)
+    fout<<mass[i]<<" "<<mass[i+1]<<"\n";
+
+ delete[]mass;
 	fin.close();
 	fout.close();
 	system ("pause");
