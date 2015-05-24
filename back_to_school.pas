@@ -1,4 +1,6 @@
- Uses CRT;
+{привет тимур и это говно мы никогда не сдадим :3 }
+
+Uses CRT;
 var
 life:array[1..100,1..100] of integer;
 s:string;
