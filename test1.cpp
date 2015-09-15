@@ -1,5 +1,3 @@
-//volkova maria 13501/3
-//вычисление квадратных корней уравнения
 #define _MATH_USE_DEFINE
 #include<iostream>
 #include<cmath>
@@ -11,7 +9,7 @@ using namespace std;
 int main(void)
 {
     setlocale( LC_ALL, "Rus");
-    int a, b, d, c, x1, x2;
+    double a, b, d, c, x1, x2;
     
     cout << "Введите коэффициенты квадратного уравнения:\n";
     cin >> a >> b >> c;
@@ -37,11 +35,11 @@ int main(void)
 
 
 	//алкоритм Виета
-	for(double i=-(abs(a)+abs(b)+abs(c)); i<=abs(a)+abs(b)+abs(c) ; i+=1)
+	for(double i=-(abs(a)+abs(b)+abs(c)); i<=abs(a)+abs(b)+abs(c) ; i+=0.1)
       {
-         for(double j=i; j<=abs(a)+abs(b)+abs(c); j+=1)
+         for(double j=i; j<=abs(a)+abs(b)+abs(c); j+=0.1)
          {
-            if(i+j==b && i*j==c)
+            if(i+j == -(b/a) && i*j == c/a)
             {
                 x1=j;
                 x2=i;
