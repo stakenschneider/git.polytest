@@ -1,0 +1,30 @@
+ e: exp(1);
+
+ /* результат численного интегрирования */
+
+for n:0 step 1 thru 20 do print(n, ": " , quad_qags(x^(n)*e^(x-1), x, 0, 1))$
+
+ /* результат без указания типа */
+
+ for n:0 step 1 thru 20 do print(n , ": " ,integrate(x^(n)*e^(x-1), x, 0, 1));
+
+/* результат для float */
+
+ for n:0 step 1 thru 20 do print(n , ": " ,float(integrate(x^(n)*e^(x-1), x, 0, 1)));
+
+  /* самостоятельно устанавливаем нужную точность (30 - почти double) */
+
+ fpprec:30;
+
+  /* результат для bfloat с точностью 30 */
+
+for n:0 step 1 thru 20 do print(n , ": " ,bfloat(integrate(x^(n)*e^(x-1), x, 0, 1)));
+
+ /* самостоятельно устанавливаем нужную точность */
+
+fpprec:5; 
+
+/* результат для bfloat с точностью 5 */
+
+ for n:0 step 1 thru 20 do print(n , ": " ,bfloat(integrate(x^(n)*e^(x-1), x, 0, 1)));
+
