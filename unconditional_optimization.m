@@ -1,21 +1,13 @@
 function [] = Main ()
 
-clc;
-clear all;                     
-close all;
-
-initialX = [-7; 10]; % Начальная точка  
-initialX2 = [0; 0]; % Начальная точка  
-initialX3= [4; 3]; % Начальная точка  
-initialX4 = [6; 5]; % Начальная точка  
+initialX  = [-7; 10]; % 1-ая начальная точка  
+initialX2 = [0; 0];   % 2-ая начальная точка  
+initialX3 = [4; 3];   % 3-ая начальная точка  
+initialX4 = [6; 5];   % 4-ая начальная точка  
  
-index = [-7,-13,8,10,80]; % Значения аргументов
+index = [-7,-13,8,10,80]; % значения аргументов
 e = 0.1;                    
-H = [index(1)*2, index(3); 
-     index(3), index(2)*2]; 
-
-% Открытие файла вывода для записи результатов
-fileID = fopen('results.txt', 'wt');
+H = [index(1)*2, index(3); index(3), index(2)*2]; 
 
 % Функция построение графика метода
 function [] = PlotGraph (v,v2,v3,v4)
@@ -37,11 +29,10 @@ ylabel('x2');
 hold off;
 end
 
-
-% Вычисление функции и значение её производной
 function [fX, dfX] = derivative(X) 
 % Вычисление значения функции от Х
 fX = index(1) * X(1)^2 + index(2) * X(2)^2 + index(3) * X(1) * X(2) + index(4) * X(1) + index(5) * X(2);
+
 % Вычисление частных производных по Х1 и Х2 соответственно
 dfX = [index(1)*2 * X(1) + index(3) * X(2) + index(4); index(2)*2 * X(2) + index(3) * X(1) + index(5)];
 end
@@ -55,7 +46,6 @@ X4 = initialX4;
 [fX, dfX] = derivative(X);
 i = 1;
 j = 1;
-% clear x y;
 x(i) = X(1);
 y(i) = X(2);
 v(1,1) = fX;
@@ -71,16 +61,10 @@ while (norm(dfX) > e)
     K=dfX;
     t=-(dfX'*K)/(K'*H*K);
 end
-% PlotGraph(v);
-
-
-
-
 
 [fX, dfX] = derivative(X2);
 i = 1;
 j = 1;
-% clear x y;
 x2(i) = X2(1);
 y2(i) = X2(2);
 v2(1,1) = fX;
@@ -96,9 +80,6 @@ while (norm(dfX) > e)
     K=dfX;
     t=-(dfX'*K)/(K'*H*K);
 end
-
-
-
 
 [fX, dfX] = derivative(X3);
 i = 1;
@@ -119,11 +100,9 @@ while (norm(dfX) > e)
     t=-(dfX'*K)/(K'*H*K);
 end
 
-
 [fX, dfX] = derivative(X4);
 i = 1;
 j = 1;
-
 x4(i) = X4(1);
 y4(i) = X4(2);
 v4(1,1) = fX;
@@ -139,21 +118,15 @@ while (norm(dfX) > e)
     K=dfX;
     t=-(dfX'*K)/(K'*H*K);
 end
+
 PlotGraph(v,v2,v3,v4);
-legend ('Линии равного уровня','Методы релаксации','Метод релаксации 2','Метод релаксации 3','Метод релаксации 4');
-
-
-
-
-
-
+legend ('Линии равного уровня','Методы релаксации');
 
 %%  Метод наискорейшего подъема
 X=initialX;  
 X2 = initialX2;
 X3 = initialX3;
 X4 = initialX4;
-
 
 [fX, dfX] = derivative(X);
 i = 1;
@@ -222,6 +195,7 @@ while (norm(dfX) > e)
     v4(1,i) = fX;
     t=-(dfX'*dfX)/(dfX'*H*dfX);
 end
+
 PlotGraph(v,v2,v3,v4);
 legend ('Линии равного уровня','Методы наискорейшего подъема');
 
@@ -291,17 +265,14 @@ while (norm(dfX) > e)
 
 end
 
-
 PlotGraph(v,v2,v3,v4);
 legend ('Линии равного уровня','Методы Ньютона');
-fprintf(fileID, '\n\n');
 
 %%  Метод сопряженных градиентов
 X=initialX;  
 X2 = initialX2;
 X3 = initialX3;
 X4 = initialX4;
-
 
 [fX, dfX] = derivative(X);
 K = dfX;
@@ -320,7 +291,6 @@ while (norm(dfX) > e)
     v(1,i) = fX;
     t = -(dfX' * K) / ((H * K)' * K);
 end
-
 
 [fX, dfX] = derivative(X2);
 K = dfX;
@@ -376,10 +346,8 @@ while (norm(dfX) > e)
     t = -(dfX' * K) / ((H * K)' * K);
 end
 
-
 PlotGraph(v,v2,v3,v4);
-legend ('Линии равного уровня','Метод сопряженных градиентов');
-fprintf(fileID, '\n\n');
+legend ('Линии равного уровня','Методы сопряженных градиентов');
 
 %% Метод Бройдена
 X=initialX;  
@@ -428,8 +396,6 @@ while (norm(dfX) > e)
     t= -(dfX'*K)/(K'*H*K);
 end 
 
-
-
 [fX,dfX] = derivative(X2);
 i=1;
 x2(i) = X2(1);
@@ -470,8 +436,6 @@ while (norm(dfX) > e)
     K=-n*dfX;
     t= -(dfX'*K)/(K'*H*K);
 end 
-
-
 
 [fX,dfX] = derivative(X3);
 i=1;
@@ -514,8 +478,6 @@ while (norm(dfX) > e)
     t= -(dfX'*K)/(K'*H*K);
 end 
 
-
-
 [fX,dfX] = derivative(X4);
 i=1;
 x4(i) = X4(1);
@@ -557,19 +519,18 @@ while (norm(dfX) > e)
     t= -(dfX'*K)/(K'*H*K);
 end 
 
-
 PlotGraph(v,v2,v3,v4);
-legend ('Линии равного уровня','Метод Бройдена');
+legend ('Линии равного уровня','Методы Бройдена');
 fprintf(fileID, '\n\n');
 
-%  Метод переменной метрики ДФП
+%%  Метод переменной метрики ДФП
 X=initialX;  
 X2 = initialX2;
 X3 = initialX3;
 X4 = initialX4;
+
 [fX, dfX] = derivative(X);
 i = 1;
-
 x(i) = X(1);
 y(i) = X(2);
 v(1,1) = fX;
@@ -622,7 +583,6 @@ end
 
 [fX, dfX] = derivative(X3);
 i = 1;
-
 x3(i) = X3(1);
 y3(i) = X3(2);
 v3(1,1) = fX;
@@ -646,9 +606,9 @@ while (norm(dfX) > e)
     y3(i) = X3(2);
     v3(1,i) = fX;
 end
+
 [fX, dfX] = derivative(X4);
 i = 1;
-
 x4(i) = X4(1);
 y4(i) = X4(2);
 v4(1,1) = fX;
@@ -673,11 +633,7 @@ while (norm(dfX) > e)
     v4(1,i) = fX;
 end
 
-
-
-
-
 PlotGraph(v,v2,v3,v4);
-legend('Линии равного уровня', 'Метод переменной метрики ДФП');
+legend('Линии равного уровня', 'Методы переменной метрики ДФП');
 
 end
