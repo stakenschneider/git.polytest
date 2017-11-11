@@ -1,12 +1,13 @@
-function test_2
+function test_esfd
 % nachal'nie znacheniya
 S = 10;
 N = 6;                          % chislo zayavok v seti
-M = 3;                          % chislo uzlov
+M = 4;                          % chislo uzlov
 
-p = [0   0.1  0.3 ;...
-    0.4  0.1  0   ;...
-    0.3  0.2  0.5 ];
+p = [0   0.1  0.3  0.6;...
+    0.2  0    0.2  0.6;...
+    0.4  0.1  0    0.5;...
+    0.3  0.2  0.5  0];
 
 m = [4;4;4;4];                   % chislo kanalov v im uzle
 c = [2 3 2 2];                   % stoimostnyye koef
@@ -40,21 +41,21 @@ w = fsolve(@wfun,test);
 function [ lambda ] = findlambda(w,u)
     r=1;
     for i = 1:M
-        P(i,1,r) = 1; %P_old = P(n-1,r-1)
+        P_old(i,1,r) = 1; %P_old = P(n-1,r-1)
     end       
        
     for r = 1:N      
         % step 1
         for i = 1:M
             sum_1 = 0;
-            for n = 2:1:r
+            for n = 1:r
                 if (n >= m(i))  
                     u(i) = m(i)*u(i);
                 else
                     u(i) = n*u(i);
                 end
-%                 sum_1 = sum_1 + (n/u(i))*P_old(i,n);
-                  sum_1 = sum_1 + ((n-1)/u(i))*P(i,n-1,r-1);
+                sum_1 = sum_1 + (n/u(i))*P_old(i,n);
+%                   sum_1 = sum_1 + ((n-1)/u(i))*P(i,n-1,r-1);
             end
           t(i) = sum_1;
         end
@@ -68,25 +69,25 @@ function [ lambda ] = findlambda(w,u)
     
         % step 3
         for i = 1:M   
-            for n = 2:1:r
+            for n = 1:r
                 if (n >= m(i))  
                     u(i) = m(i)*u(i);
                 else
                     u(i) = n*u(i);
                 end 
                 
-%                 P(i,n+1) = ((w(i)*lambda)/(w(1)*u(i)))*P_old(i,n);
-                    P(i,n,r) = ((w(i)*lambda)/(w(1)*u(i)))*P(i,n-1,r-1);
+                P(i,n+1) = ((w(i)*lambda)/(w(1)*u(i)))*P_old(i,n);
+%                     P(i,n,r) = ((w(i)*lambda)/(w(1)*u(i)))*P(i,n-1,r-1);
             end
             
             sum = 0;
             for n = 2:r
-                sum = sum + P(i,n,r);
+                sum = sum + P(i,n);
             end
         
             P(i,1,r) = 1 - sum;
         end
-%         P_old = P;
+        P_old = P;
     end  
 end
 
@@ -113,6 +114,5 @@ fun = @(x)(-findlambda(w,x));
 %     sss(i) = c(i)*my_u(i)^a(i);
 % end
 % sum(sss)
-
 
 end

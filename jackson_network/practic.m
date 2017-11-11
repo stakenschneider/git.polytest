@@ -74,3 +74,17 @@ end
 fun = @(x)(-findlambda(w,x));
 [my_u,fval] = fmincon(fun,w,[],[],[],[],lb,[],@limitation,optimoptions('fmincon','Algorithm','sqp'))
 end
+
+
+
+my_u =
+
+    1.9747
+    1.2062
+    2.1763
+    2.6428
+
+
+fval =
+
+   -1.2195
