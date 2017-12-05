@@ -1,0 +1,13 @@
+nikita@nikita-pc:~/temp$ sudo ./p1.1 &
+[1] 2661
+nikita@nikita-pc:~/temp$ Parent pid 2662, ppid 2661.
+Child pid 2663, ppid 2662.
+Signal has been successfully sent.
+Signal handle pid 2662, ppid 2661.
+
+nikita@nikita-pc:~/temp$ jobs
+[1]+  Running                 sudo ./p1.1 &
+nikita@nikita-pc:~/temp$ sudo kill -SIGUSR2 2662
+Signal handle pid 2662, ppid 2661.
+nikita@nikita-pc:~/temp$ sudo kill -SIGUSR2 2662
+[1]+  Done                    sudo ./p1.1

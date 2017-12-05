@@ -1,0 +1,9 @@
+nikita@nikita-pc:~/temp$ sudo ./p1.10.1 2 0 0 0 0
+Parent pid #6783, ppid #6782.
+First child pid #6784, ppid #2284.
+Second child pid #6785, ppid #2284.
+First child pid #6785, ppid #2284.
+Third child pid #6786, ppid #2284.
+Second child pid #6786, ppid #2284.
+First child pid #6786, ppid #2284.
+

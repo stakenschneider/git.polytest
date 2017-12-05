@@ -1,0 +1,16 @@
+nikita@nikita-pc:~/temp$ ./p8.1.se
+Using default port: 65100.
+Server socket 3 created.
+Wait clients.
+Client thread with socket 4 created.
+Client thread with socket 5 created.
+Client message: hello1
+Client message: hello2
+Client message: im ready to disconnect on signal ctrl+c
+Client message: yeah it's good idea
+^CTry to finish client with socket 4
+Client socket 4 closed.
+Try to finish client with socket 5
+Client socket 5 closed.
+Server socket 3 closed.
+nikita@nikita-pc:~/temp$ 

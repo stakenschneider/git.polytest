@@ -1,0 +1,7 @@
+nikita@nikita-pc:~/temp$ gcc p1.1.c -o p1.1
+nikita@nikita-pc:~/temp$ sudo ./p1.1
+Parent pid 2100, ppid 2099.
+Child pid 2101, ppid 2100.
+Signal has been successfully sent.
+Signal handle pid 2100, ppid 2099.
+( ... )

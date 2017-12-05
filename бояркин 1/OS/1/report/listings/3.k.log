@@ -1,0 +1,21 @@
+nikita@nikita-pc:~/temp$ ./file_name undefigned.txt && ./file_name defigned.txt  
+./file_name: неудача при попытке открыть файл undefigned.txt
+nikita@nikita-pc:~/temp$ ./file_name defigned.txt && ./file_name defigned.txt 
+./file_name: файл defigned.txt открыт 
+./file_name: файл defigned.txt открыт 
+
+nikita@nikita-pc:~/temp$ ./file_name undefigned.txt || ./file_name defigned.txt  
+./file_name: неудача при попытке открыть файл undefigned.txt 
+./file_name: файл defigned.txt открыт 
+nikita@nikita-pc:~/temp$ ./file_name defigned.txt || ./file_name defigned.txt ./file_name: файл defigned.txt открыт 
+
+nikita@nikita-pc:~/temp$ ./file_name undefigned.txt | ./file_name defigned.txt ./file_name: файл defigned.txt открыт 
+nikita@nikita-pc:~/temp$ ./file_name defigned.txt | ./file_name defigned.txt ./file_name: файл defigned.txt открыт 
+
+nikita@nikita-pc:~/temp$ ./file_name undefigned.txt ; ./file_name defigned.txt 
+./file_name: неудача при попытке открыть файл undefigned.txt 
+./file_name: файл defigned.txt открыт 
+nikita@nikita-pc:~/temp$ ./file_name defigned.txt ; ./file_name defigned.txt 
+./file_name: файл defigned.txt открыт 
+./file_name: файл defigned.txt открыт 
+

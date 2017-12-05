@@ -1,0 +1,26 @@
+# Terminal 1
+nikita@nikita-pc:~/temp$ gcc p8.3.cl.c -o p8.3.cl
+nikita@nikita-pc:~/temp$ ./p8.3.cl
+Using default ip: 127.0.0.1.
+Using default port: 65100.
+Client socket 3 created.
+Connection established.
+Ready to send messages.
+hello1
+Server message: hello1
+some text there!
+Server message: some text there!
+
+# Terminal 2
+nikita@nikita-pc:~/temp$ ./p8.3.cl
+Using default ip: 127.0.0.1.
+Using default port: 65100.
+Client socket 3 created.
+Connection established.
+Ready to send messages.
+hello2
+Server message: hello2
+oups!
+Server message: oups!
+
+

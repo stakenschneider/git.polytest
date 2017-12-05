@@ -1,0 +1,11 @@
+SQL> CONNECT '127.0.0.1/3050:D:\temp\TEMP_DATABASE.fdb' USER 'SYSDBA' PASSWORD 'masterkey';
+Database: '127.0.0.1/3050:D:\temp\TEMP_DATABASE.fdb', User: SYSDBA
+SQL> SET TRANSACTION SNAPSHOT;
+Commit current transaction (y/n)?N
+Rolling back work.
+SQL> SELECT * FROM TEMP_TABLE;
+
+ID_TEMP_TABLE
+=============
+            1
+			2

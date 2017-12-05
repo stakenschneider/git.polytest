@@ -1,0 +1,31 @@
+# Terminal 1
+nikita@nikita-pc:~/temp$ gcc p6.1.se.c -o p6.1.se
+nikita@nikita-pc:~/temp$ gcc p6.1.cl.c -o p6.1.cl
+nikita@nikita-pc:~/temp$ ./p6.1.se 
+Using default filename: readfile.txt.
+Client's message: 11111111111
+Client's message: 22222222222
+Client's message: 33333333333
+Client's message: 44444444444
+^CQueue has been successfully deleted.
+
+# Terminal 2
+nikita@nikita-pc:~/temp$ ./p6.1.cl
+Using default filename: readfile.txt.
+11111111111
+Server's message: Message received!
+33333333333
+Server's message: Message received!
+12345_SERVER_IS_DOWN_ALREADY_12345
+It's impossible to send message.
+
+# Terminal 3
+nikita@nikita-pc:~/temp$ ./p6.1.cl 
+Using default filename: readfile.txt.
+22222222222
+Server's message: Message received!
+44444444444
+Server's message: Message received!
+12345_SERVER_IS_DOWN_ALREADY_12345
+It's impossible to send message.
+
