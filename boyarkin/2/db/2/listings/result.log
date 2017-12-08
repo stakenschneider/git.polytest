@@ -1,0 +1,2 @@
+$ sudo sudo python3.6 manage.py generate disease 1000
+

@@ -1,0 +1,155 @@
+\documentclass[14pt,a4paper,report]{report}
+\usepackage[a4paper, mag=1000, left=2.5cm, right=1cm, top=2cm, bottom=2cm, headsep=0.7cm, footskip=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks]{hyperref}
+\usepackage{listings} 
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\hypersetup{
+	colorlinks = true,
+	linkcolor  = black
+}
+
+\usepackage{titlesec}
+\titleformat{\chapter}
+{\Large\bfseries} % format
+{}                % label
+{0pt}             % sep
+{\huge}           % before-code
+
+
+\DeclareCaptionFont{white}{\color{white}} 
+
+% Listing description
+\usepackage{listings} 
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{ 
+	% Listing settings
+	inputencoding = utf8,			
+	extendedchars = \true, 
+	keepspaces = true, 			  	 % Поддержка кириллицы и пробелов в комментариях
+	language = Python,            	 	 % Язык программирования (для подсветки)
+	basicstyle = \small\sffamily, 	 % Размер и начертание шрифта для подсветки кода
+	numbers = left,               	 % Где поставить нумерацию строк (слева\справа)
+	numberstyle = \tiny,          	 % Размер шрифта для номеров строк
+	stepnumber = 1,               	 % Размер шага между двумя номерами строк
+	numbersep = 5pt,              	 % Как далеко отстоят номера строк от подсвечиваемого кода
+	backgroundcolor = \color{white}, % Цвет фона подсветки - используем \usepackage{color}
+	showspaces = false,           	 % Показывать или нет пробелы специальными отступами
+	showstringspaces = false,    	 % Показывать или нет пробелы в строках
+	showtabs = false,           	 % Показывать или нет табуляцию в строках
+	frame = single,              	 % Рисовать рамку вокруг кода
+	tabsize = 2,                  	 % Размер табуляции по умолчанию равен 2 пробелам
+	captionpos = t,             	 % Позиция заголовка вверху [t] или внизу [b] 
+	breaklines = true,           	 % Автоматически переносить строки (да\нет)
+	breakatwhitespace = false,   	 % Переносить строки только если есть пробел
+	escapeinside = {\%*}{*)}      	 % Если нужно добавить комментарии в коде
+}
+
+\begin{document}
+
+\def\contentsname{Содержание}
+
+% Titlepage
+\begin{titlepage}
+	\begin{center}
+		\textsc{Санкт-Петербургский Политехнический 
+			Университет Петра Великого\\[5mm]
+			Кафедра компьютерных систем и программных технологий}
+		
+		\vfill
+		
+		\textbf{Отчёт по лабораторной работе №2\\[3mm]
+			Курс: «Базы данных»\\[3mm]
+			Тема: «Создание интерактивного генератора данных»\\[35mm]
+			}
+	\end{center}
+	
+	\hfill
+	\begin{minipage}{.5\textwidth}
+		Выполнил студент:\\[2mm] 
+		Бояркин Никита Сергеевич\\
+		Группа: 43501/3\\[5mm]
+		
+		Проверил:\\[2mm] 
+		Мяснов Александр Владимирович
+	\end{minipage}
+	\vfill
+	\begin{center}
+		Санкт-Петербург\\ \the\year\ г.
+	\end{center}
+\end{titlepage}
+
+% Contents
+\tableofcontents
+\clearpage
+
+\chapter{Лабораторная работа №2}
+
+\section{Цель работы}
+
+Получить практические навыки работы с БД путем создания собственного интерактивного генератора данных на языке программирования python.
+
+\section{Программа работы}
+
+\begin{itemize}
+	\item Разработать интерактивный генератор данных.
+	\item Заполнить таблицы данными с помощью генератора.
+\end{itemize}
+
+\section{Программное окружение}
+
+\begin{itemize}
+	\item Python 3.6
+	\item Django 1.10.5
+	\item Psycopg 2.6.2
+	\item PostgreSQL 9.5.6
+\end{itemize}
+
+\section{Ход работы}
+
+\subsection{Создание проекта, конфигурация сервера}
+
+Генератор представляет собой management команду, которая принимает два аргумента: название таблицы для добавления и количество данных для генерации. 
+
+Данные генерируются для всех таблиц пропорционально их собственному коэффициенту. Например, при генерации в таблице болезней $N$ строк, в таблице лекарств будет сгенерировано $2N$ строк, в таблице поставок будет сгенерировано $4N$ строк и так далее для каждой таблице. Такой метод генерации сохраняет логику базы данных, ведь количество поставок лекарств обычно больше количества лекарств, а количество лекарств обычно больше количества болезней.
+
+Кроме пропорционального заполнения, генератор обеспечивает логическую целостность данных в отдельных таблицах. Это ознчачает, например, что таблицы показаний и противопоказаний не содержат одинаковых пар лекарство + болезнь; таблица несовместимости лекарств не содержит повторяющихся значений; цены, даты и количества лекарств содержатся в определенных границах и др.
+
+Полный листинг команды генерации данных:
+
+\lstinputlisting{listings/generate.py}
+
+Пример выполнения команды:
+
+\lstinputlisting{listings/result.log}
+
+После этого были сгенерированы данные пропорционально весу каждой таблицы:
+
+\begin{itemize}
+	\item 2000 лекарств.
+	\item 1000 болезней.
+	\item 250 несовместимостей лекарств.
+	\item 250 противопоказаний.
+	\item 250 диагнозов (показаний).
+	\item 250 аптек.
+	\item 250 поставщиков.
+	\item 4000 поставок.
+	\item 250 клиентов.
+	\item 500 частей заказов.
+	\item 2000 заказов.
+\end{itemize}	
+
+\section{Вывод}
+
+Написание собственного генератора намного более гибкое решение, чем добавление данных вручную. Это обусловлено тем, что при тестировании нас обычно не волнуют точные значения имен, цен и прочих параметров, в то время как пропорции данных между таблицами, контроль повторных значений и неявные зависимости между таблицами важны при тестировании.
+
+\end{document}

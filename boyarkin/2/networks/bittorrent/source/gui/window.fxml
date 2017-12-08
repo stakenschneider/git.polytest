@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+   <center>
+      <SplitPane dividerPositions="0.7" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <BorderPane prefHeight="348.0" prefWidth="296.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <center>
+                        <SplitPane dividerPositions="0.6" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <TableView fx:id="interactionsList" layoutX="93.0" layoutY="3.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columns>
+                                        <TableColumn prefWidth="30.0" text="№" />
+                                        <TableColumn prefWidth="180.0" text="Name" />
+                                        <TableColumn prefWidth="70.0" text="Size" />
+                                        <TableColumn prefWidth="70.0" text="Peers" />
+                                        <TableColumn prefWidth="45.0" text="\%" />
+                                        <TableColumn prefWidth="75.0" text="Uploading" />
+                                        <TableColumn prefWidth="75.0" text="Sharing" />
+                                        <TableColumn prefWidth="70.0" text="State" />
+                                      </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <TabPane layoutX="50.0" layoutY="-58.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <tabs>
+                                        <Tab text="Files">
+                                             <content>
+                                                <TableView fx:id="filesList" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <columns>
+                                                    <TableColumn prefWidth="30.0" text="№" />
+                                                    <TableColumn prefWidth="250.0" text="Path" />
+                                                    <TableColumn prefWidth="70.0" text="Size" />
+                                                    <TableColumn prefWidth="45.0" text="\%" />
+                                                  </columns>
+                                                </TableView>
+                                             </content></Tab>
+                                        <Tab text="Trackers">
+                                             <content>
+                                                 <TableView fx:id="trackersList" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                     <columns>
+                                                         <TableColumn prefWidth="30.0" text="№" />
+                                                         <TableColumn prefWidth="200.0" text="URL" />
+                                                         <TableColumn prefWidth="50.0" text="State" />
+                                                         <TableColumn prefWidth="60.0" text="Peers" />
+                                                         <TableColumn prefWidth="60.0" text="Seeders" />
+                                                         <TableColumn prefWidth="60.0" text="Leechers" />
+                                                     </columns>
+                                                 </TableView>
+                                             </content></Tab>
+                                        <Tab text="Peers">
+                                              <content>
+                                                  <TableView fx:id="peersList" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <columns>
+                                                          <TableColumn prefWidth="30.0" text="№" />
+                                                          <TableColumn prefWidth="120.0" text="IP" />
+                                                          <TableColumn prefWidth="65.0" text="Port" />
+                                                          <TableColumn prefWidth="75.0" text="Uploading" />
+                                                          <TableColumn prefWidth="75.0" text="Sharing" />
+                                                          <TableColumn prefWidth="70.0" text="State" />
+                                                      </columns>
+                                                  </TableView>
+                                              </content></Tab>
+                                      </tabs>
+                                    </TabPane>
+                                 </children></AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="140.0" />
+        </items>
+      </SplitPane>
+   </center>
+   <top>
+      <VBox prefHeight="50.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="menuFileOpen" mnemonicParsing="false" text="Open" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem fx:id="menuHelpAbout" mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </top>
+</BorderPane>

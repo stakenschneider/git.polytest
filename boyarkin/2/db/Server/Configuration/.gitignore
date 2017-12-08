@@ -1,0 +1,6 @@
+key.txt
+user.txt
+password.txt
+__pycache__
+*.pyc
+*$py.class

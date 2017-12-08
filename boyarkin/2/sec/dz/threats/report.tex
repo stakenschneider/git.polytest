@@ -1,0 +1,122 @@
+\documentclass[14pt,a4paper,report]{report}
+\usepackage[a4paper, mag=1000, left=2.5cm, right=1cm, top=2cm, bottom=2cm, headsep=0.7cm, footskip=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks]{hyperref}
+\usepackage{listings} 
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{graphicx}
+\hypersetup{
+	colorlinks = true,
+	linkcolor  = black
+}
+
+\usepackage{titlesec}
+\titleformat{\chapter}
+{\Large\bfseries} % format
+{}                % label
+{0pt}             % sep
+{\huge}           % before-code
+
+
+\DeclareCaptionFont{white}{\color{white}} 
+
+% Listing description
+\usepackage{listings} 
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{ 
+	% Listing settings
+	inputencoding = utf8,			
+	extendedchars = \true, 
+	keepspaces = true, 			  	 % Поддержка кириллицы и пробелов в комментариях
+	language = C,            	 	 % Язык программирования (для подсветки)
+	basicstyle = \small\sffamily, 	 % Размер и начертание шрифта для подсветки кода
+	numbers = left,               	 % Где поставить нумерацию строк (слева\справа)
+	numberstyle = \tiny,          	 % Размер шрифта для номеров строк
+	stepnumber = 1,               	 % Размер шага между двумя номерами строк
+	numbersep = 5pt,              	 % Как далеко отстоят номера строк от подсвечиваемого кода
+	backgroundcolor = \color{white}, % Цвет фона подсветки - используем \usepackage{color}
+	showspaces = false,           	 % Показывать или нет пробелы специальными отступами
+	showstringspaces = false,    	 % Показывать или нет пробелы в строках
+	showtabs = false,           	 % Показывать или нет табуляцию в строках
+	frame = single,              	 % Рисовать рамку вокруг кода
+	tabsize = 2,                  	 % Размер табуляции по умолчанию равен 2 пробелам
+	captionpos = t,             	 % Позиция заголовка вверху [t] или внизу [b] 
+	breaklines = true,           	 % Автоматически переносить строки (да\нет)
+	breakatwhitespace = false,   	 % Переносить строки только если есть пробел
+	escapeinside = {\%*}{*)}      	 % Если нужно добавить комментарии в коде
+}
+
+\begin{document}
+
+\def\contentsname{Содержание}
+
+% Titlepage
+\begin{titlepage}
+	\begin{center}
+		\textsc{Санкт-Петербургский Политехнический 
+			Университет Петра Великого\\[5mm]
+			Кафедра компьютерных систем и программных технологий}
+		
+		\vfill
+		
+		\textbf{Домашнее задание №1\\[3mm]
+			Курс: «Защита информации»\\[6mm]
+			Тема: «Угрозы информационной безопасности»\\[35mm]
+		}
+	\end{center}
+	
+	\hfill
+	\begin{minipage}{.5\textwidth}
+		Выполнил студент:\\[2mm] 
+		Бояркин Никита Сергеевич\\
+		Группа: 43501/3\\[5mm]
+		
+		Проверил:\\[2mm] 
+		Новопашенный Андрей Гелиевич
+	\end{minipage}
+	\vfill
+	\begin{center}
+		Санкт-Петербург\\ \the\year\ г.
+	\end{center}
+\end{titlepage}
+
+\chapter{Домашнее задание №1}
+
+\section{Угрозы для корпоративных сетей}
+
+\begin{itemize}
+	\item \emph{Физическая угроза данным} - Риск потерять данные после сбоя физического носителя (происходит обычно при авариях, пожарах, потопах и др.).
+	\item \emph{Угроза со стороны персонала} - Вызвана пренебрежением правилами, личной выгодой или саботажем.
+	\item \emph{Вредоносное ПО и хакерские атаки} - Попытки хищения или нарушения целостности данных программными методами.
+\end{itemize}
+
+\subsection{Защита корпоративных сетей}
+
+\begin{itemize}
+	\item \emph{Защита от физической угрозы данным} - Резервное копирование данных (на носители в различных местах), учет и уход за носителем и сервисным оборудованием (системы кондиционирования, отопления, освещения и др.).
+	\item \emph{Защита от персонала} - Контроль, санкции за пренебрежение мерами безопасности, NDA.
+	\item \emph{Защита от вредоносного ПО и хакерских атак} - Экранирование, обновляемый антивирус, наличие системного администратора.
+\end{itemize}
+
+\section{Угрозы для частных лиц}
+
+\begin{itemize}
+	\item \emph{Беспечность пользователя} - Публикация информации о кредитных картах, билетах, паролях и др. в социальных сетях и других информационных ресурсах.
+	\item \emph{Вредоносное ПО} - Обычно, загрузка вируса из сети.
+	\item \emph{Физическая угроза данным} - Риск потерять данные после сбоя физического носителя (чаще всего выход из строя SSD, потеря флешки или ноутбука).
+\end{itemize}
+
+\subsection{Защита частных лиц}
+
+\begin{itemize}
+	\item \emph{Защита от беспечности пользователя} - не быть беспечным.
+	\item \emph{Защита от вредоносного ПО} - Наличие обновляемого антивируса, современного браузера, блокировщика рекламы.
+	\item \emph{Защита от физической угрозы данным} - Резервное копирование данных (на носители в различных местах), уход за носителем. Оставлять контактную информацию на флешках и ноутбуках в случае потери.
+\end{itemize}
+
+\end{document}
