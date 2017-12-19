@@ -1,0 +1,23 @@
+nikita@nikita-pc:~/temp$ ipcs
+
+----— Message Queues —------
+key msqid owner perms used-bytes messages 
+0x51010071 0 nikita 666 0 0 
+
+----— Shared Memory Segments —------
+key shmid owner perms bytes nattch status 
+0x00000000 557056 nikita 600 524288 2 dest 
+0x00000000 163841 nikita 600 524288 2 dest 
+0x00000000 589826 nikita 600 2097152 2 dest 
+0x00000000 688131 nikita 600 524288 2 dest 
+0x00000000 458756 nikita 600 16777216 2 
+0x00000000 1114117 nikita 600 524288 2 dest 
+0x00000000 524294 nikita 600 524288 2 dest 
+0x00000000 786439 nikita 600 524288 2 dest 
+0x00000000 1212424 nikita 600 524288 2 dest 
+0x00000000 983049 nikita 600 524288 2 dest 
+0x00000000 1015818 nikita 600 33554432 2 dest 
+0x00000000 1310731 nikita 600 524288 2 dest 
+
+----— Semaphore Arrays —------
+key semid owner perms nsems

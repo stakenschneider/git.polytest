@@ -1,0 +1,128 @@
+  PID TTY      STAT   TIME COMMAND
+ 2278 pts/2    S+     0:00 sudo sh p4.8.sh
+ 2279 pts/2    S+     0:00  \_ sh p4.8.sh
+ 2280 pts/2    S+     0:00      \_ sh p4.8.p1.sh
+ 2406 pts/2    S+     0:00          \_ ./p1.9.2.p 0
+ 2407 pts/2    Z+     0:00              \_ [p1.9.2.c1] <defunct>
+ 2413 pts/2    S+     0:00              \_ p1.9.2.c3
+ 2414 pts/2    S+     0:00              \_ sh -c ps xf > p1.9.2.p.ps.log
+ 2415 pts/2    R+     0:00                  \_ ps xf
+    2 ?        S      0:00 [kthreadd]
+    3 ?        S      0:00  \_ [ksoftirqd/0]
+    5 ?        S<     0:00  \_ [kworker/0:0H]
+    6 ?        S      0:00  \_ [kworker/u8:0]
+    7 ?        S      0:01  \_ [rcu_sched]
+    8 ?        S      0:00  \_ [rcu_bh]
+    9 ?        S      0:00  \_ [migration/0]
+   10 ?        S      0:00  \_ [watchdog/0]
+   11 ?        S      0:00  \_ [watchdog/1]
+   12 ?        S      0:00  \_ [migration/1]
+   13 ?        S      0:00  \_ [ksoftirqd/1]
+   15 ?        S<     0:00  \_ [kworker/1:0H]
+   16 ?        S      0:00  \_ [watchdog/2]
+   17 ?        S      0:00  \_ [migration/2]
+   18 ?        S      0:00  \_ [ksoftirqd/2]
+   20 ?        S<     0:00  \_ [kworker/2:0H]
+   22 ?        S      0:00  \_ [watchdog/3]
+   23 ?        S      0:00  \_ [migration/3]
+   24 ?        S      0:00  \_ [ksoftirqd/3]
+   26 ?        S<     0:00  \_ [kworker/3:0H]
+   27 ?        S      0:00  \_ [kdevtmpfs]
+   28 ?        S<     0:00  \_ [netns]
+   29 ?        S<     0:00  \_ [perf]
+   30 ?        S      0:00  \_ [khungtaskd]
+   31 ?        S<     0:00  \_ [writeback]
+   32 ?        SN     0:00  \_ [ksmd]
+   33 ?        SN     0:00  \_ [khugepaged]
+   34 ?        S<     0:00  \_ [crypto]
+   35 ?        S<     0:00  \_ [kintegrityd]
+   36 ?        S<     0:00  \_ [bioset]
+   37 ?        S<     0:00  \_ [kblockd]
+   38 ?        S<     0:00  \_ [ata_sff]
+   39 ?        S<     0:00  \_ [md]
+   40 ?        S<     0:00  \_ [devfreq_wq]
+   43 ?        S      0:00  \_ [kworker/3:1]
+   45 ?        S      0:00  \_ [kswapd0]
+   46 ?        S<     0:00  \_ [vmstat]
+   47 ?        S      0:00  \_ [fsnotify_mark]
+   48 ?        S      0:00  \_ [ecryptfs-kthrea]
+   64 ?        S<     0:00  \_ [kthrotld]
+   66 ?        S<     0:00  \_ [acpi_thermal_pm]
+   67 ?        S      0:00  \_ [kworker/u8:2]
+   68 ?        S<     0:00  \_ [bioset]
+   69 ?        S<     0:00  \_ [bioset]
+   70 ?        S<     0:00  \_ [bioset]
+   71 ?        S<     0:00  \_ [bioset]
+   72 ?        S<     0:00  \_ [bioset]
+   73 ?        S<     0:00  \_ [bioset]
+   74 ?        S<     0:00  \_ [bioset]
+   75 ?        S<     0:00  \_ [bioset]
+   76 ?        S<     0:00  \_ [bioset]
+   77 ?        S<     0:00  \_ [bioset]
+   78 ?        S<     0:00  \_ [bioset]
+   79 ?        S<     0:00  \_ [bioset]
+   80 ?        S<     0:00  \_ [bioset]
+   81 ?        S<     0:00  \_ [bioset]
+   82 ?        S<     0:00  \_ [bioset]
+   83 ?        S<     0:00  \_ [bioset]
+   84 ?        S<     0:00  \_ [bioset]
+   85 ?        S<     0:00  \_ [bioset]
+   86 ?        S<     0:00  \_ [bioset]
+   87 ?        S<     0:00  \_ [bioset]
+   88 ?        S<     0:00  \_ [bioset]
+   89 ?        S<     0:00  \_ [bioset]
+   90 ?        S<     0:00  \_ [bioset]
+   91 ?        S<     0:00  \_ [bioset]
+   95 ?        S<     0:00  \_ [ipv6_addrconf]
+  108 ?        S<     0:00  \_ [deferwq]
+  109 ?        S<     0:00  \_ [charger_manager]
+  150 ?        S      0:00  \_ [scsi_eh_0]
+  151 ?        S<     0:00  \_ [kpsmoused]
+  152 ?        S<     0:00  \_ [scsi_tmf_0]
+  153 ?        S      0:00  \_ [scsi_eh_1]
+  154 ?        S<     0:00  \_ [scsi_tmf_1]
+  155 ?        S      0:00  \_ [scsi_eh_2]
+  156 ?        S<     0:00  \_ [scsi_tmf_2]
+  157 ?        S      0:00  \_ [scsi_eh_3]
+  158 ?        S<     0:00  \_ [scsi_tmf_3]
+  161 ?        S      0:00  \_ [kworker/1:3]
+  163 ?        S<     0:00  \_ [rtsx_pci_sdmmc_]
+  166 ?        S<     0:00  \_ [bioset]
+  188 ?        S<     0:00  \_ [kworker/1:1H]
+  189 ?        S<     0:00  \_ [kworker/3:1H]
+  191 ?        S      0:00  \_ [jbd2/sda1-8]
+  192 ?        S<     0:00  \_ [ext4-rsv-conver]
+  222 ?        S      0:00  \_ [kauditd]
+  239 ?        S<     0:00  \_ [kworker/0:1H]
+  244 ?        S      0:00  \_ [kworker/2:2]
+  269 ?        S      0:00  \_ [kworker/3:2]
+  352 ?        S<     0:00  \_ [kworker/2:1H]
+  404 ?        S      0:00  \_ [kworker/0:3]
+  478 ?        S<     0:00  \_ [kmemstick]
+  508 ?        S<     0:00  \_ [cfg80211]
+ 2225 ?        S      0:00  \_ [kworker/2:0]
+ 2226 ?        S      0:00  \_ [kworker/u8:1]
+ 2258 ?        S      0:00  \_ [kworker/1:1]
+ 2260 ?        S      0:00  \_ [kworker/0:0]
+    1 ?        Ss     0:05 /sbin/init splash
+  229 ?        Ss     0:01 /lib/systemd/systemd-journald
+  267 ?        Ss     0:01 /lib/systemd/systemd-udevd
+  773 ?        Ssl    0:00 /usr/lib/snapd/snapd
+  782 ?        Ss     0:00 /usr/sbin/cron -f
+  785 ?        Ssl    0:00 /usr/sbin/ModemManager
+  795 ?        Ssl    0:03 /usr/sbin/NetworkManager --no-daemon
+  966 ?        S      0:00  \_ /sbin/dhclient -d -q -sf /usr/lib/NetworkManager/nm-dhcp-helper -pf /var/run/dhclient-wlp2s0.pid -lf /var/lib/NetworkManager/dhclient-9023c98c-dfec-48ba-b40f-580e318b3560-wlp2s0.lease -cf /var/lib/NetworkManager/dhclient-wlp2s0.conf wlp2s0
+  801 ?        Ss     0:00 /lib/systemd/systemd-logind
+  810 ?        Ssl    0:00 /usr/lib/accountsservice/accounts-daemon
+  812 ?        Ss     0:00 /usr/sbin/acpid
+  848 ?        Ssl    0:00 /usr/sbin/cups-browsed
+  863 ?        Ssl    0:00 /usr/lib/policykit-1/polkitd --no-debug
+  878 ?        Ssl    0:00 /usr/sbin/lightdm
+  925 tty7     Ssl+   0:25  \_ /usr/lib/xorg/Xorg -core :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+  952 ?        Sl     0:00  \_ lightdm --session-child 12 15
+  935 ?        Ss     0:00 /usr/sbin/irqbalance --pid=/var/run/irqbalance.pid
+  945 ?        Ss     0:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+ 1250 tty1     Ss+    0:00 /sbin/agetty --noclear tty1 linux
+ 1309 ?        Ssl    0:00 /usr/lib/upower/upowerd
+ 1488 ?        Ssl    0:01 /usr/lib/udisks2/udisksd --no-debug
+ 1496 ?        Sl     0:06 /usr/lib/x86_64-linux-gnu/fwupd/fwupd

@@ -1,0 +1,58 @@
+nikita@nikita-pc:~/temp$ netstat -s
+Ip:
+    6777 total packets received
+    2 with invalid addresses
+    0 forwarded
+    0 incoming packets discarded
+    4260 incoming packets delivered
+    4264 requests sent out
+    1008 outgoing packets dropped
+    2 dropped because of missing route
+Icmp:
+    2024 ICMP messages received
+    0 input ICMP message failed.
+    ICMP input histogram:
+        destination unreachable: 2024
+    2024 ICMP messages sent
+    0 ICMP messages failed
+    ICMP output histogram:
+        destination unreachable: 2024
+IcmpMsg:
+        InType3: 2024
+        OutType3: 2024
+Tcp:
+    14 active connections openings
+    12 passive connection openings
+    2 failed connection attempts
+    0 connection resets received
+    2 connections established
+    137 segments received
+    137 segments send out
+    0 segments retransmited
+    0 bad segments received.
+    2 resets sent
+Udp:
+    76 packets received
+    2024 packets to unknown port received.
+    0 packet receive errors
+    2100 packets sent
+UdpLite:
+TcpExt:
+    11 TCP sockets finished time wait in fast timer
+    26 packets directly queued to recvmsg prequeue.
+    18 bytes directly received in process context from prequeue
+    11 packet headers predicted
+    33 acknowledgments not containing data payload received
+    17 predicted acknowledgments
+    TCPOrigDataSent: 59
+IpExt:
+    InMcastPkts: 103
+    OutMcastPkts: 44
+    InBcastPkts: 6
+    InOctets: 1095501
+    OutOctets: 316253
+    InMcastOctets: 7152
+    OutMcastOctets: 5267
+    InBcastOctets: 468
+    InNoECTPkts: 6777
+

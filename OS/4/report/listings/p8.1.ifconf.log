@@ -1,0 +1,26 @@
+nikita@nikita-pc:~/temp$ ifconfig 
+enp1s0    Link encap:Ethernet  HWaddr e8:9a:8f:e1:0e:17  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:4271 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4271 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:314292 (314.2 KB)  TX bytes:314292 (314.2 KB)
+
+wlp2s0    Link encap:Ethernet  HWaddr 74:de:2b:64:22:23  
+          inet addr:192.168.0.106  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet6 addr: fe80::47b3:2637:b9d2:ef23/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:3348 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:124 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1074445 (1.0 MB)  TX bytes:19056 (19.0 KB)
+

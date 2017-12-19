@@ -1,0 +1,10 @@
+nikita@nikita-pc:~$ ps -eLfl
+F S UID     PID  PPID LWP  C NLWP PRI  NI ADDR SZ     WCHAN STIME TTY   TIME     CMD
+4 S root    1    0    1    0 1    80   0  -    46314  -     дек09 ?     00:00:04 /sbin/init splash
+(...)
+4 S root    3197 2358 3197 0 1    80   0  -    14004  -     00:56 pts/2 00:00:00 sudo ./p4.7
+4 S root    3198 3197 3198 0 4    80   0  -    24161  -     00:56 pts/2 00:00:00 ./p4.7
+1 S root    3198 3197 3199 0 4    80   0  -    24161  -     00:56 pts/2 00:00:00 ./p4.7
+1 S root    3198 3197 3200 0 4    58   -  -    24161  -     00:56 pts/2 00:00:00 ./p4.7
+1 S root    3198 3197 3201 0 4    -40  -  -    24161  -     00:56 pts/2 00:00:00 ./p4.7
+4 R nikita  3205 2687 3205 0 1    80   0  -    9646   -     00:56 pts/6 00:00:00 ps -eLfl

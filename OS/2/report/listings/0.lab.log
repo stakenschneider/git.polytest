@@ -1,0 +1,5 @@
+g4081_12@SPOComp7:~$ who
+g4081_12   tty7         2016-11-18 12:10 (:0)
+g4081_12@SPOComp7:~$ cat /proc/version
+Linux version 2.6.35-30-generic-pae (buildd@vernadsky) (gcc version 4.4.5 (Ubuntu/Linaro 4.4.4-14ubuntu5) ) #56-Ubuntu SMP Mon Jul 11 21:51:12 UTC 2011
+

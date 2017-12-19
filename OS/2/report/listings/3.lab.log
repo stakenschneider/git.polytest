@@ -1,0 +1,8 @@
+g4081_12@SPOComp7:~/Boyarkin/2$ >tempfile
+g4081_12@SPOComp7:~/Boyarkin/2$ ln -s tempfile folder/aaaa
+g4081_12@SPOComp7:~/Boyarkin/2$ ln -s tempfile bbbb
+g4081_12@SPOComp7:~/Boyarkin/2$ ln -s tempfile ../cccc
+g4081_12@SPOComp7:~/Boyarkin/2$ sh 3.sh tempfile
+lrwxrwxrwx 1 g4081_12 g4081_12 8 2016-12-02 14:29 /home/Boyarkin/cccc -> tempfile
+lrwxrwxrwx 1 g4081_12 g4081_12 8 2016-12-02 14:29 /home/Boyarkin/2/bbbb -> tempfile
+lrwxrwxrwx 1 g4081_12 g4081_12 8 2016-12-02 14:29 /home/Boyarkin/2/folder/aaaa -> tempfile

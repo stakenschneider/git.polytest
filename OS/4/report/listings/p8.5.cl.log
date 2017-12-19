@@ -1,0 +1,30 @@
+# Terminal 1
+g4081_12@SPOComp8:~/Boyarkin/4$ gcc p8.1.cl.c -o p8.1.cl
+g4081_12@SPOComp8:~/Boyarkin/4$ ./p8.1.cl 10.1.208.7 65100
+Client socket 5 created.
+Connection established.
+Ready to send messages.
+first message
+Server message: first message
+ready to disconnect
+Server message: ready to disconnect
+now server is down, useless message
+It's impossible to receive message, try to close client socket.
+It's impossible to shutdown socket: Transport endpoint is not connected
+g4081_12@SPOComp8:~/Boyarkin/4$ 
+
+
+# Terminal 2
+g4081_12@SPOComp8:~/Boyarkin/4$ ./p8.1.cl 10.1.208.7 65100
+Client socket 5 created.
+Connection established.
+Ready to send messages.
+O_o o_O
+Server message: O_o o_O
+GOGOGO
+Server message: GOGOGO
+now server is down, useless message
+It's impossible to receive message, try to close client socket.
+It's impossible to shutdown socket: Transport endpoint is not connected
+g4081_12@SPOComp8:~/Boyarkin/4$ 
+

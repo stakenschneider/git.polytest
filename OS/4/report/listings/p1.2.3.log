@@ -1,0 +1,17 @@
+# Terminal 1
+nikita@nikita-pc:~/temp$ gcc -pthread p1.2.3.c -o p1.2.3
+nikita@nikita-pc:~/temp$ gcc -pthread p1.2.3.pr.c -o p1.2.3.pr
+nikita@nikita-pc:~/temp$ ./p1.2.3
+Parent pid 3594, ppid 1987.
+( ... )
+
+# Terminal 2
+nikita@nikita-pc:~/temp$ ./p1.2.3.pr 3594
+13:41:32.563475 Signal sent.
+
+# Terminal 1
+nikita@nikita-pc:~/temp$ ./p1.2.3
+Parent pid 3594, ppid 1987.
+13:41:32.563895 Signal handle.
+
+

@@ -1,0 +1,15 @@
+nikita@nikita-pc:~/temp$ gcc p5.1.se.c -o p5.1.se
+nikita@nikita-pc:~/temp$ gcc p5.1.cl.c -o p5.1.cl
+nikita@nikita-pc:~/temp$ ./p5.1.se &
+[1] 5778
+nikita@nikita-pc:~/temp$ Using default filename: readfile.txt.
+./p5.1.cl
+Received filename: readfile.txt.
+File's part: some text there
+AAAAAAAAAAAAAAAAAA
+BBBBBBBBBBBBBBBBBB
+CCCCCCCCCCCCCCCCCC
+
+nikita@nikita-pc:~/temp$ jobs
+[1]+  Done                    ./p5.1.se
+

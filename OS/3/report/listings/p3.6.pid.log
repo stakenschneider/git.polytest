@@ -1,0 +1,11 @@
+nikita@nikita-pc:~/temp$ ps -A
+  PID TTY          TIME CMD
+    1 ?        00:00:06 systemd
+    2 ?        00:00:00 kthreadd
+    3 ?        00:00:00 ksoftirqd/0
+  ( ... )
+ 5119 ?        00:00:00 kworker/u8:0
+ 5143 pts/2    00:00:00 ps
+ 
+nikita@nikita-pc:~/temp$ cat /proc/sys/kernel/pid_max
+32768

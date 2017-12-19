@@ -1,0 +1,14 @@
+nikita@nikita-pc:~/temp$ gcc p2.2.c -o p2.2
+nikita@nikita-pc:~/temp$ ./p2.2 &
+[1] 3202
+nikita@nikita-pc:~/temp$ kill -sigusr1 %1
+SIGUSR catched.
+nikita@nikita-pc:~/temp$ jobs
+[1]+  Running                 ./p2.2 &
+nikita@nikita-pc:~/temp$ jobs
+[1]+  Running                   ./p2.2 &
+nikita@nikita-pc:~/temp$ jobs
+[1]+  Running                 ./p2.2 &
+nikita@nikita-pc:~/temp$ jobs
+[1]+  Interrupt               ./p2.2
+
