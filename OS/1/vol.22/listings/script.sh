@@ -26,7 +26,13 @@ do
 		result=$($command)
 		echo "$result" >> $dir
 		echo "$result"
+#        echo -n $host
+        echo -n
 	fi
 done
 
 echo "Log closed"
+
+
+
+while [ $var1 -]

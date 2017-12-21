@@ -1,0 +1,33 @@
+Log start at: 2017-12-20 13:18:55
+
+listings:
+lsa.out
+foo.c
+gdbtest.c
+my_open.c
+prog.c
+progmodify.c
+q.log
+read.txt
+script.sh
+Новая папка
+
+listings:
+lsa.out
+foo.c
+gdbtest.c
+my_open.c
+prog.c
+progmodify.c
+q.log
+read.txt
+script.sh
+Новая папка
+
+listings:
+pwd/Users/Masha/Documents/git.polytest/OS/1/vol.22/listings
+
+listings:
+whoMasha    console  Dec 17 19:20 
+Masha    ttys001  Dec 20 12:45 
+

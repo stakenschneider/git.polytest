@@ -10,6 +10,7 @@
 
 #define DEFAULT_FILENAME "readfile.txt"
 #define BUFFER_SIZE 100
+#define SET_WRITE_ENABLE 1
 
 // Структура сообщения
 typedef struct {
