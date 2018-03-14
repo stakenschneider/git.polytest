@@ -1,9 +1,0 @@
-nikita@nikita-pc:~$ ps -eLf
-UID    PID  PPID LWP  C NLWP STIME TTY   TIME     CMD
-root   1    0    1    0 1    22:21 ?     00:00:04 /sbin/init splash
-(...)
-nikita 2677 2358 2677 0 3    23:48 pts/2 00:00:00 ./p4.1
-nikita 2677 2358 2678 0 3    23:48 pts/2 00:00:00 ./p4.1
-nikita 2677 2358 2679 0 3    23:48 pts/2 00:00:00 ./p4.1
-nikita 2687 2351 2687 1 1    23:48 pts/6 00:00:00 bash
-nikita 2698 2687 2698 0 1    23:49 pts/6 00:00:00 ps -eLf

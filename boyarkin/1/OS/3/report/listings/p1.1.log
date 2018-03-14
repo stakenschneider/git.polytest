@@ -1,8 +1,0 @@
-nikita@nikita-pc:~/temp$ gcc p1.1.c -o p1.1
-nikita@nikita-pc:~/temp$ ./p1.1
-Process has been started, pid 2384, ppid 2383.
-Parent process, pid 2384, ppid 2383.
-Process has been finished, pid 2384, ppid 2383.
-Child process, pid 2385, ppid 2384.
-Process has been finished, pid 2385, ppid 2384.
-
