@@ -1,0 +1,56 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[left=3cm, right=1cm, top=2cm, bottom=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[OT1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\graphicspath{{image/}}
+\bibliographystyle{plain}
+
+\usepackage{placeins}
+
+\lstdefinestyle{base_listing}{
+  extendedchars     = {true},
+  inputencoding     = {utf8}, 
+  basicstyle        = {\ttfamily \scriptsize},
+  keywordstyle      = {\rmfamily \bfseries},
+  commentstyle      = {\rmfamily \itshape},
+  tabsize           = {2},
+  flexiblecolumns   = {false},
+  frame             = {single},
+  showstringspaces  = {false},
+  breaklines        = {true}, 
+  breakatwhitespace = {true}
+}
+
+\lstdefinelanguage{LLVM-asm}
+{
+  morekeywords = {
+    load, store, malloc, alloca, free, getelementptr,
+    add, sub, insertvalue, extractvalue, icmp, call,
+    define, void, global
+  },
+  sensitive   = false,
+  morecomment = [l]{;}
+}
+
+\lstdefinestyle{crs_llvm}{
+  style    = {base_listing},
+  language = {LLVM-asm}
+}
+
+\lstdefinestyle{crs_cpp}{
+  style    = {base_listing},
+  language = {C++}
+}
+
+\lstdefinestyle{crs_bash}{
+  style    = {base_listing},
+  language = {bash}
+}

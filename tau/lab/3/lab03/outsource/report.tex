@@ -1,0 +1,311 @@
+\include{settings}
+
+\begin{document}
+\include{title}
+\def\contentsname{Содержание}
+
+
+% Contents
+%\tableofcontents
+%\clearpage
+
+
+\section{Цель работы}
+
+Анализ свойств заданного объекта. Построение матриц для перехода между формами представления ВСВ.
+
+\section{Программа работы}
+
+\begin{enumerate}
+	\item Проанализировать свойства заданного объекта:
+\begin{itemize}
+\item управляемость
+\item наблюдаемость
+\item устойчивость
+\item минимальность
+\item минимально фазовость
+\end{itemize}
+\item Рассчитать матрицы перехода
+
+\end{enumerate}
+
+\section{Индивидуальное задание}
+
+$x''+2x'+0.75x=0.75u$, \\
+
+\section{Ход работы}
+\subsection{Свойства объекта}
+
+\subsubsection{Управляемость}
+
+Проверим управляемость системы по критерию Калмана:
+
+\begin{equation*}
+\text{$A=\begin{bmatrix}
+0 & 1 \\ -0.75 & -2
+\end{bmatrix} B=\begin{bmatrix}
+0 \\ 1
+\end{bmatrix}$} \quad
+\text{$
+U = \begin{bmatrix}
+B & AB
+\end{bmatrix} = \begin{bmatrix}
+0 & 1\\ 1 & -2
+\end{bmatrix} 
+$} \quad
+\text{$detU=-1\neq 0$}
+\end{equation*}
+
+Определитель одной из матриц управляемости не нулевой, что означает, что система полностью управляема.
+
+\subsubsection{Наблюдаемость}
+
+Проверим наблюдаемость системы по критерию Калмана:
+
+\begin{equation*}
+\text{$A=\begin{bmatrix}
+0 & -0.75 \\ 1 & -2
+\end{bmatrix} C=\begin{bmatrix}
+0 & 1
+\end{bmatrix}$} \quad
+\end{equation*}
+
+\begin{equation*}
+\text{$N=[C^T,A^TC^T]=[\begin{bmatrix} 0 \\ 1 \end{bmatrix},\begin{bmatrix}   0  &  1 \\
+   -0.75 &  -2 \end{bmatrix}\begin{bmatrix} 0 \\ 1 \end{bmatrix}]=\begin{bmatrix} 0 & 1 \\ 1 & -2 \end{bmatrix}$}
+\end{equation*}
+
+\begin{equation*}
+\text{$detN=-1\neq 0$}
+\end{equation*}
+
+Определитель одной из матриц наблюдаемости не нулевой, что означает, что система полностью наблюдаема.
+
+\subsubsection{Устойчивость}
+
+По теореме Ляпунова система является устойчивой тогда, когда вещественные части полюсов её передаточной функции отрицательны. В нашем случае полюса передаточной функции равны $p_1=-1.5, p_2=-0.5$, что означает, что система устойчива, так как все корни лежат в левой полуплоскости. 
+
+\subsubsection{Минимальность}
+
+Система минимальна, так как её порядок понизить нельзя.
+
+\subsection{Минимально фазовость}
+
+Звено является минимально фазовым, так как все корни лежат в левой полуплоскости. 
+
+\subsection{Преобразования форм}
+
+\subsubsection{Матрицы управляемости}
+
+Матрица управляемости находится как блочная матрица, где первый столбец равен матрице $B$, а второй столбец равен произведению $AB$:
+
+\begin{center}
+$U=[B, AB]$
+\end{center}
+
+Матрицы управляемости нормальной формы управления (НФУ):
+
+\begin{equation*}
+\text{$U= \begin{bmatrix}
+0 & 1\\ 1 & -2
+\end{bmatrix}$}
+\text{$, U^{-1}=\begin{bmatrix} 2 & 1 \\ 1 & 0 \end{bmatrix}$}
+\end{equation*}
+
+Матрицы управляемости нормальной формы наблюдения (НФН):
+
+\begin{equation*}
+\text{$U=\begin{bmatrix} 0.75 &         0 \\
+         0  &  0.75 \end{bmatrix}$}
+\quad
+\text{$U^{-1}=\begin{bmatrix} 1.3333   &      0 \\
+         0  &  1.3333 \end{bmatrix}$}
+\end{equation*}
+
+Матрицы управляемости канонической формы (КФ):
+
+\begin{equation*}
+\text{$U=\begin{bmatrix}  -0.75  &  1.125 \\
+    0.75  & -0.375 \end{bmatrix}$}
+\quad
+\text{$U^{-1}=\begin{bmatrix} 0.6667 &   2 \\
+    1.3333  &  1.3333 \end{bmatrix}$}
+\end{equation*}
+
+\subsubsection{Матрицы преобразования}
+
+Матрица преобразования высчитывается по формуле:
+
+\begin{center}
+$P=U_{*}U^{-1}$
+\end{center}
+
+\begin{itemize}
+	\item Матрица преобразования из НФУ
+	\begin{itemize}
+	\item НФУ в НФН
+	\begin{equation*}
+	\text{$P=U_{*}U^{-1}=
+	\begin{bmatrix} 0.75 &         0 \\
+         0  &  0.75 \end{bmatrix}
+	\begin{bmatrix} 2 & 1 \\ 1 & 0 \end{bmatrix}
+	=\begin{bmatrix}1.5 &   0.75 \\
+    0.75 &         0 \end{bmatrix}$}
+	\end{equation*}
+	
+	Проверим корректность полученной матрицы преобразования $P$. Для этого получим матрицу $B_{*}$ через матрицу $B$. 
+	
+	\begin{equation*}
+	\text{$B_{*}=PB$}
+	\Longrightarrow
+	\text{$B_{*}
+	=\begin{bmatrix}1.5 &   0.75 \\
+    0.75 &         0 \end{bmatrix}
+	\begin{bmatrix} 0 \\ 1 \end{bmatrix}
+	=\begin{bmatrix} 0.75 \\ 0 \end{bmatrix}$}
+	\end{equation*}
+	
+	\item НФУ в КФ:
+	
+	\begin{equation*}
+	\text{$P=U_{*}U^{-1}=
+	\begin{bmatrix}  -0.75  &  1.125 \\
+    0.75  & -0.375 \end{bmatrix}
+	\begin{bmatrix} 2 & 1 \\ 1 & 0 \end{bmatrix}
+	=\begin{bmatrix} -0.375 &   -0.75 \\
+    1.125 &    0.75 \end{bmatrix}$}
+	\end{equation*}
+	
+	Проверим корректность полученной матрицы преобразования $P$. Для этого получим матрицу $B_{*}$ через матрицу $B$. 
+	
+	\begin{equation*}
+	\text{$B_{*}=PB$}
+	\Longrightarrow
+	\text{$B_{*}=
+	\begin{bmatrix} -0.375 &   -0.75 \\
+    1.125 &    0.75 \end{bmatrix}
+	\begin{bmatrix} 0 \\ 1 \end{bmatrix}
+	=\begin{bmatrix} -0.75 \\ 0.75 \end{bmatrix}$}
+	\end{equation*}
+	
+	\end{itemize}
+	\item Матрица преобразования из НФН:
+	\begin{itemize}
+
+	\item НФН в НФУ
+		
+	\begin{equation*}
+	\text{$P=U_{*}U^{-1}=
+	\begin{bmatrix}
+0 & 1\\ 1 & -2
+\end{bmatrix}
+\begin{bmatrix} 1.3333   &      0 \\
+         0  &  1.3333 \end{bmatrix}
+=\begin{bmatrix}   0  &  1.3333 \\
+    1.3333  & -2.6667 \end{bmatrix}$}
+	\end{equation*}
+	
+	Проверим корректность полученной матрицы преобразования $P$. Для этого получим матрицу $B_{*}$ через матрицу $B$.
+	
+	\begin{equation*}
+	\text{$B_{*}=PB$}
+	\Longrightarrow
+	\text{$B_{*}=
+	\begin{bmatrix}   0  &  1.3333 \\
+    1.3333  & -2.6667 \end{bmatrix}
+   \begin{bmatrix} 0.75 \\ 0 \end{bmatrix}
+   =\begin{bmatrix} 0 \\ 1 \end{bmatrix}$}
+	\end{equation*}
+	
+	
+	
+	\item НФН в КФ:
+	
+	\begin{equation*}
+	\text{$P=U_{*}U^{-1}=
+	\begin{bmatrix}  -0.75  &  1.125 \\
+    0.75  & -0.375 \end{bmatrix}
+\begin{bmatrix} 1.3333   &      0 \\
+         0  &  1.3333 \end{bmatrix}
+=\begin{bmatrix}   -1 &    1.5 \\
+    1  & -0.5 \end{bmatrix}$}
+	\end{equation*}
+	
+	Проверим корректность полученной матрицы преобразования $P$. Для этого получим матрицу $B_{*}$ через матрицу $B$.
+	
+	\begin{equation*}
+	\text{$B_{*}=PB$}
+	\Longrightarrow
+	\text{$B_{*}=
+	\begin{bmatrix}   -1 &    1.5 \\
+    1  & -0.5 \end{bmatrix}
+\begin{bmatrix} 0.75 \\ 0 \end{bmatrix}
+   =\begin{bmatrix} -0.75 \\ 0.75 \end{bmatrix}$}
+	\end{equation*}
+	
+
+	\end{itemize}	
+	
+	\item Матрица преобразования из КФ:
+	\begin{itemize}
+	\item КФ в НФУ
+
+\begin{equation*}
+	\text{$P=U_{*}U^{-1}=
+	\begin{bmatrix}
+0 & 1\\ 1 & -2
+\end{bmatrix}
+\begin{bmatrix} 0.6667 &   2 \\
+    1.3333  &  1.3333 \end{bmatrix}
+=\begin{bmatrix}1.3333  &  1.3333 \\
+   -2  & -0.6667\end{bmatrix}$}
+	\end{equation*}
+	
+	Проверим корректность полученной матрицы преобразования $P$. Для этого получим матрицу $B_{*}$ через матрицу $B$.
+	
+	\begin{equation*}
+	\text{$B_{*}=PB$}
+	\Longrightarrow
+	\text{$B_{*}=
+	\begin{bmatrix}1.3333  &  1.3333 \\
+   -2  & -0.6667\end{bmatrix}
+   \begin{bmatrix} -0.75 \\ 0.75 \end{bmatrix}
+   =\begin{bmatrix} 0 \\ 1 \end{bmatrix}$}
+	\end{equation*}
+	
+
+	
+	\item КФ в НФН:
+	
+	\begin{equation*}
+	\text{$P=U_{*}U^{-1}=
+	\begin{bmatrix} 0.75 &         0 \\
+         0  &  0.75 \end{bmatrix}
+	\begin{bmatrix} 0.6667 &   2 \\
+    1.3333  &  1.3333 \end{bmatrix}
+=\begin{bmatrix}0.5 &  1.5 \\
+    1  &  1\end{bmatrix}$}
+	\end{equation*}
+	
+	Проверим корректность полученной матрицы преобразования $P$. Для этого получим матрицу $B_{*}$ через матрицу $B$.
+	
+	\begin{equation*}
+	\text{$B_{*}=PB$}
+	\Longrightarrow
+	\text{$B_{*}=
+\begin{bmatrix}0.5 &  1.5 \\
+    1  &  1\end{bmatrix}
+         \begin{bmatrix} -0.75 \\ 0.75 \end{bmatrix}
+         =\begin{bmatrix} 0.75 \\ 0 \end{bmatrix}$}
+	\end{equation*}
+		
+	\end{itemize}
+\end{itemize}
+
+
+\section{Вывод}
+
+В ходе работы проанализированы свойства объекта и получены матрицы для переходов между
+формами представления модели ВСВ. Также проверена корректность всех матриц перехода.
+ 
+\end{document}
