@@ -73,7 +73,7 @@
 	\hfill
 	\begin{minipage}{.5\textwidth}
 		Выполнил студент:\\[2mm] 
-		Бояркин Никита Сергеевич\\
+		Волкова Мария Дмитриевна\\
 		Группа: 43501/3\\[5mm]
 		
 		Проверил:\\[2mm] 
@@ -218,27 +218,36 @@ Tracert базируется на использовании поля TTL про
 
 \subsection{Протокол ICMP}
 
-ICMP ошибка о недоступности хоста (host unreachable) отправляется маршрутизатором, когда он получает IP датаграмму, которую невозможно перенаправить. Для получения данной ошибки в домашней сети будем пинговать тот локальный IP адрес, к которому шлюз по умолчанию не сможет проложить маршрут. 
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[scale = 0.69]{images/icmp1.png}
-	
-	\caption{ICMP ошибки недоступности адресата}
-	\label{image:8}
-\end{figure}
-
-В результате, на каждый посылаемый ICMP эхо запрос, вернулись ICMP пакеты с ошибкой "Dectination unreacheble (Host unreacheable)" с типом 0x3 и кодом 0x1. Особенностью данной ошибки является то, что она посылается от шлюза, а не от узла назначения, что не удивительно, потому что к нему не удалось проложить маршрут. Также, при данном типе ошибки присутствует 32-битное не используемое поле, исходный IP заголовок, а также первые 64-бита исходной дейтаграммы.
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[scale = 0.69]{images/icmp2.png}
-	
-	\caption{ICMP информирование о перенаправлении}
+	\includegraphics[scale = 0.4]{images/icmp_req.JPG}
+	\caption{ICMP запрос}
 	\label{image:9}
 \end{figure}
 
-После ICMP пакета "Dectination unreacheble (Host unreacheable)" следует ICMP пакет "Redirect (Redirect for host)", который информирует о том, что необходимо создать новый маршрут к указанному хосту и внести его в таблицу маршрутизации.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale = 0.4]{images/icmp_rep.JPG}
+	\caption{ICMP ответ}
+	\label{image:8}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale = 0.4]{images/icmp_pp_req.JPG}
+	\caption{ICMP запрос пакет с фрагментацией}
+	\label{image:8}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale = 0.4]{images/icmp_pp_rep.JPG}
+	\caption{ICMP ответ с фрагментацией}
+	\label{image:8}
+\end{figure}
+
+
 
 \clearpage
 
@@ -248,7 +257,7 @@ ICMP ошибка о недоступности хоста (host unreachable) о
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[scale =  0.85]{images/arp1.png}
+	\includegraphics[scale =  0.4]{images/arp1.JPG}
 	
 	\caption{ARP запрос}
 	\label{image:13}
@@ -258,7 +267,7 @@ ICMP ошибка о недоступности хоста (host unreachable) о
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[scale = 0.80]{images/arp2.png}
+	\includegraphics[scale = 0.4]{images/arp2.JPG}
 	
 	\caption{ARP ответ}
 	\label{image:14}
