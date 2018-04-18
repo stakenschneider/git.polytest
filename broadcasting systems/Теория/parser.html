@@ -1,0 +1,532 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (Win98; I) [Netscape]">
+   <title>compilers</title>
+</head>
+<body>
+
+<center><font size=+1>Лабораторная работа по курсу "Транслирующие системы"</font>
+<p><font size=+2>Построение синтаксических анализаторов</font>
+<br><font size=+2>(утилиты yacc и lex)</font></center>
+
+<p><font size=+1><a href="#goal">Цель работы</a></font>
+<br><font size=+1><a href="#tools">Инструментальные средства</a></font>
+<br><font size=+1><a href="#didakt">Методические указания</a></font>
+<br><a href="#introduction">1. Введение</a>
+<br><a href="#review">2. Обзор структуры и синтаксиса yacc-программы</a>
+<br><a href="#definitions">2.1. Особенности секции определений</a>
+<br><a href="#rules">2.2. Формат правил и действий</a>
+<br><a href="#make">3. Получение исполнимой программы синтаксического анализа</a>
+<br><a href="#yacc">3.1. Запуск транслятора yacc</a>
+<br><a href="#compile">3.2. Компиляция исполнимой программы синтаксического
+анализатора</a>
+<br><a href="#examples">4. Примеры серии _date</a>
+<br><a href="#date">4.1. Исходный вариант примера серии _date</a>
+<br><a href="#trace">4.2. Включение трассировки правил</a>
+<br><a href="#literals">4.3. Литеральные лексемы</a>
+<br><a href="#addon">4.4. Сопутствующие значения</a>
+<br><a href="#monotype">4.4.1. Сопутствующие значения одного типа</a>
+<br><a href="#nonmonotype">4.4.2. Сопутствующие значения различных типов</a>
+<br><a href="#nonterminals">4.4.3. Значения, сопутствующие нетерминальным
+символам</a>
+<br><a href="#recursion">5. Рекурсивные правила</a>
+<br><a href="#resolve">6. Управление правилами. Разрешение двусмысленностей</a>
+<br><font size=+1><a href="#tasks">Программа работы</a></font>
+<p>
+<hr WIDTH="100%">
+<center><a NAME="goal"></a><b><font size=+1>Цель работы</font></b></center>
+
+<p>Цель работы - изучение и получение навыков применения утилит yacc и
+lex для генерации синтаксических анализаторов.
+<center>
+<p><a NAME="tools"></a><b><font size=+1>Инструментальные средства</font></b></center>
+
+<p>В качестве инструментальных средств рекомендуется использовать системные
+программы ОС LINUX (Mandrake 9.2): утилиты lex (flex) и yacc (bison), а
+также компилятор программ на языке С - gcc. Для сравнения функциональных
+возможностей различных реализаций Lex-генератора рекомендуется выполнить
+работу также в среде ОС MS WINDOWS (Windows 9x/2k) (с применением утилит
+командной строки flex v2.5 и byacc v.1.9 и системы программирования на
+языке C QuickC v2.5 или MS Visual C++ v.5/6).
+<center>
+<p><a NAME="didakt"></a><b><font size=+1>Методические указания</font></b></center>
+
+<p><a NAME="introduction"></a><font size=+1>1. Введение</font>
+<p>Yacc ("yet another compiler compiler'') предназначен для генерации программ
+синтаксического анализа. Основу исходной yacc-программы составляет грамматика
+- набор правил, описывающих синтаксическую структуру ввода, и соответствующих
+действий в виде фрагментов на языке C.
+<p>Исходная программа транслируется yacc в модуль на языке C, в котором
+определена глобальная функция yyparse(), реализующая алгоритм синтаксического
+разбора в соответствии с заданной грамматикой.
+<p>Будучи вызванной, функция yyparse() многократно обращается к внешней
+функции по имени yylex(), которая должна возвращать либо код лексемы в
+виде целого положительного числа, либо - в конце ввода - ноль. Код лексемы,
+возвращаемый функцией yylex(), может сопровождаться некоторой величиной
+("сопутствующее значение''), которая должна передаваться в переменной yylval,
+принадлежащей yyparse(). Интерфейс между yyparse() и yylex() на этапе компиляции
+определяется посредством заголовочного файла, который генерируется yacc
+и содержит коды лексем и описание типа переменной yylval.
+<p>Функция yyparse() возвращает ноль, если конец ввода обнаружен тогда,
+когда входная последовательность лексем соответствует правилу для символа
+верхнего уровня грамматики (стартовый символ). Результат yyparse() ненулевой,
+если выявлена синтаксическая ошибка: либо текущий фрагмент входной последовательности
+не соответствует ни одному из правил грамматики, либо стартовый символ
+при получении маркера конца ввода не обнаружен. При обнаружении ошибки
+автоматически вызывается функция yyerror(), которая должна быть, наряду
+с main(), определена пользователем.
+<p>Ниже следует краткий формальный обзор языка yacc. В дальнейшем изложении
+символы-лексемы называются также терминальными символами; символы, определенные
+через другие символы (т.е., выражающие некоторую структуру символов), называются
+нетерминальными.
+<p><a NAME="review"></a><font size=+1>2. Обзор структуры и синтаксиса yacc-программы</font>
+<p>Форма исходного текста yacc-программы полностью совпадает с формой для
+lex-программы:
+<p><i>определения</i>
+<br><b>%%</b>
+<br><i>правила</i>
+<br><b>%%</b>
+<br><i>процедуры пользователя</i>
+<p>Так же, как и в lex, все, что следует после второго разделителя "%%''
+(секция процедур), переносится в C-программу без анализа и изменений.
+<p>Так же, как в lex, в секции правил допускаются комментарии в стиле языка
+C и включаемый код на языке C в форме:
+<p><b>%{</b>
+<br><i>code</i>
+<br><b>%}</b>
+<p><a NAME="definitions"></a><font size=+1>2.1. Особенности секции определений</font>
+<p>В отличие от lex, не допускаются фрагменты на C, записанные с отступом.
+Вообще, нигде в секции определений yacc-программы отступы не разрешены.
+<p>Объявления, специфические для yacc-программы, следующие:
+<p>- объявление объединенного типа (поддерживает различные типы сопутствующего
+значения), в форме:
+<p><b>%union</b>
+<br><b>{</b>
+<br><i>type_1 name_1;</i>
+<br><i>...</i>
+<br><i>type_n name_n;</i>
+<br><b>}</b>
+<p>- объявление стартового символа, в форме:
+<p><b>%start start_sym</b>
+<p>- объявления лексем, в форме:
+<p><b>%token SYM1 SYM2 ...</b>
+<p>либо (с уточнением типа сопутствующего значения) в форме:
+<p><b>%token</b> <i>&lt;type_k></i> <b>SYM1 SYM2 ...</b>
+<p>- объявление типа сопутствующего значения для нетерминального символа,
+в форме:
+<p><b>%type</b> <i>&lt;type_k></i> <b>sym1 ...</b>
+<p><a NAME="rules"></a><font size=+1>2.2. Формат правил и действий</font>
+<p>Правила записываются в форме:
+<p><b>sym&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; SEQ&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<p>где sym - имя нетерминального символа,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SEQ - определение этого символа в виде
+последовательности имен символов.
+<p>Разделители символов в SEQ - пробел, табуляция, новая строка. Точка
+с запятой разделяет правила.
+<p>После любого из символов SEQ может быть задано действие - один составной
+оператор языка C: последовательность любого числа простых операторов, заключенная
+в фигурные скобки.
+<p>При помощи псевдопеременных $1, $2 и т.д. обеспечивается доступ к "стеку
+значений'', в который записываются величины, сопутствующие символам. Значение
+определяемого нетерминального символа (символ слева от двоеточия в правиле)
+может быть установлено через псевдопеременную $$.
+<p>Альтернативные определения одно и того же нетерминального символа могут
+быть объединены при помощи знака "|'', например:
+<p><b>sym&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;
+SEQ_1</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SEQ_2</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<p>аналогично
+<p><b>sym&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;
+SEQ_1&nbsp;&nbsp;&nbsp;&nbsp; ;</b>
+<br><b>sym&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;
+SEQ_2&nbsp;&nbsp;&nbsp;&nbsp; ;</b>
+<p>Символ может быть определен в виде пустой последовательности символов:
+<p><b>sym&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<p><a NAME="make"></a><font size=+1>3. Получение исполнимой программы синтаксического
+анализа</font>
+<p>Синтаксический анализ обязательно включает в себя (как правило, в виде
+вложенной процедуры) лексический анализ. Поэтому для получения исполнимой
+программы синтаксического анализатора требуется совместное применение утилит-генераторов:
+lex (flex) и yacc (bison).
+<p><a NAME="yacc"></a><font size=+1>3.1. Запуск трансляторов lex и yacc</font>
+<p>Выполнеие lex-генерации производится с помощью следующей командной строки:
+<p><b>/usr/bin/flex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -w&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+scaner.l</b>&nbsp;&nbsp;&nbsp; (для ОС LINUX)
+<br><b>flex.exe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-l -o&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; scaner.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+scaner.l</b>&nbsp;&nbsp;&nbsp; (для ОС MS WINDOWS)
+<p>Замечание:
+<p>Для обеспечения правильной работы yacc-генератора необходимо обязательно
+включить в начало файла scaner.l следующий фрагмент кода:
+<p>для ОС LINUX:
+<p><b>%{</b>
+<br><b>#include "parser.tab.h"</b>
+<br><b>%}</b>
+<p>для ОС WINDOWS:
+<p><b>%{</b>
+<br><b>#include "parser_tab.h"</b>
+<br><b>%}</b>
+<p>Обратите внимание, что имя включаемого файла (parser) в общем случае
+произвольно, но должно совпадать с именем yacc-программы (parser.y).
+<p>Выполнение yacc-генерации производится с помощью следующей командной
+строки:
+<p><b>/usr/bin/bison&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -d&nbsp;&nbsp;
+parser.y</b> (для ОС LINUX)
+<br><b>byacc.exe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-vtd&nbsp;&nbsp; parser.y</b> (для ОС MS WINDOWS)
+<p>где
+<br>parser.y&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp; имя файла yacc-программы;
+<br>опция&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>-v</b>&nbsp;&nbsp; задает вывод
+сообщений о двусмысленных правилах;
+<br>опция&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>-t&nbsp;&nbsp; </b>определяет
+включение отладочной информации в файл *.c;
+<br>опция&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>-d</b>&nbsp;&nbsp; задает генерацию
+заголовочного файла *.h.
+<p>Результатом работы yacc-генератора являются два файла:
+<p>parser.tab.c&nbsp;&nbsp;&nbsp; и&nbsp;&nbsp;&nbsp; parser.tab.h&nbsp;&nbsp;&nbsp;<b>&nbsp;
+
+</b>(для ОС LINUX)
+<br>parser_tab.c&nbsp;&nbsp; и&nbsp;&nbsp;&nbsp; parser_tab.h&nbsp;&nbsp;&nbsp;&nbsp;
+(для ОС WINDOWS)
+<p><a NAME="compile"></a><font size=+1>3.2. Компиляция исполнимой программы
+синтаксического анализатора</font>
+<p>Компиляция синтаксического анализатора производится путём совместной
+(последовательной) трансляции исходных С-кодов, полученных в результате
+работы утилит lex (flex) и yacc (bison). Применительно к ОС LINUX необходимо
+выполнить следующие команды:
+<p><b>gcc&nbsp;&nbsp;&nbsp;&nbsp; -c -o&nbsp;&nbsp;&nbsp;&nbsp; scaner.obj&nbsp;&nbsp;&nbsp;&nbsp;
+lex.yy.c</b>
+<br><b>gcc&nbsp;&nbsp;&nbsp;&nbsp; -c -o&nbsp;&nbsp;&nbsp;&nbsp; parser.obj&nbsp;&nbsp;&nbsp;&nbsp;
+parser.tab.c</b>
+<br><b>gcc&nbsp;&nbsp;&nbsp;&nbsp; -c -o&nbsp;&nbsp;&nbsp;&nbsp; zz.obj&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+zz.c</b>
+<br><b>gcc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -o&nbsp;&nbsp;&nbsp;&nbsp;
+syntax.out&nbsp;&nbsp;&nbsp;&nbsp; scaner.obj&nbsp;&nbsp;&nbsp;&nbsp; parser.obj&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+zz.obj</b>
+<p>где
+<br>scaner.obj, parser.obj - имена объектных файлов соответственно лексического
+и синтаксического анализаторов; zz.obj, zz.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+- имена объектного и исходного файлов "главной" программы;
+<br>syntax.out&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+- имя исполнимого файла синтаксического анализатора.
+<p>В среде ОС MS WINDOWS рекомендуется скопировать в свой рабочий каталог
+исходные файлы для генераторов лексического и синтаксического анализаторов
+(например, файлы _date.l0 и _date.y из каталога с примерами EXAMPLES\ _DATE\V1).
+Затем с помощью утилит flex и byacc надлежит получить файлы анализаторов
+на языке С. Убедившись в том, что в рабочем каталоге пользователя имеется
+копия zz.c, следует вызвать систему программирования (например, QuickC:
+qc.exe). Проект исполняемой программы должен включать в себя три модуля:
+y_tab.c (результат byacc), _date.c (результат flex), zz.c (определения
+функций main() и yyerror()). Создание проекта производится выбором пункта
+меню Make/Set program list. После включения в проект перечисленных модулей
+следует выбрать пункт Options/Make, установить режим Release, и в подпункте
+Compiler flags установить модель Large. Затем можно получить исполняемую
+программу, выбрав пункт Make/Build. Выход из QuickC осуществляется стандартным
+образом (например, с помощью комбинации клавиш Alt+F4).
+<p>Проверка работоспособности синтаксического анализатора выполняется командной
+строкой:
+<p><b>./prog&nbsp;&nbsp; &lt;&nbsp;&nbsp;&nbsp; data.in&nbsp;&nbsp;&nbsp;&nbsp;
+>&nbsp;&nbsp;&nbsp; data.out&nbsp;&nbsp;&nbsp; </b>(для ОС LINUX)<b></b>
+<br><b>prog&nbsp;&nbsp;&nbsp;&nbsp; &lt;&nbsp;&nbsp;&nbsp; data.in&nbsp;&nbsp;&nbsp;&nbsp;
+>&nbsp;&nbsp;&nbsp; data.out</b>&nbsp;&nbsp;&nbsp; (для ОС WINDOWS)
+<p>где
+<br>prog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - исполнимый файл синтаксического
+анализатора;
+<br>data.in&nbsp;&nbsp; - входной файл синтаксического анализатора;
+<br>data.out - выходной файл синтаксического анализатора.
+<p>Замечание:
+<p>Угловые скобки в командной строке обозначают перенаправление входного
+(&lt;) и выходного (>) потоков
+<br>команды.
+<p>Рекомендуется сравнить файлы data.in и data.out.
+<p><a NAME="examples"></a><font size=+1>4. Примеры серии _date</font>
+<p><a NAME="date"></a><font size=+1>4.1. Исходный вариант примера серии
+_date</font>
+<p>Рассмотренный синтаксический анализатор не производит вывода; полезная
+работа сводится к проверке структуры ввода.
+<p><b>%{</b>
+<br><b>#define&nbsp;&nbsp;&nbsp;&nbsp; YYDEBUG&nbsp;&nbsp;&nbsp;&nbsp;
+0</b>
+<br><b>%}</b>
+<p><b>%token&nbsp;&nbsp;&nbsp;&nbsp; NUMBER&nbsp;&nbsp;&nbsp;&nbsp; MONTH</b>
+<p><b>%start&nbsp;&nbsp;&nbsp;&nbsp; date</b>
+<p><b>%%</b>
+<br><b>date&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; MONTH&nbsp;&nbsp;&nbsp;&nbsp;
+NUMBER&nbsp;&nbsp;&nbsp;&nbsp; NUMBER</b>
+<br><b>%%</b>
+<p>В этой спецификации определены лексемы NUMBER и MONTH, и задан стартовый
+символ date. (Стартовый символ - это один из нетерминальных символов, обнаружение
+которого представляет главную цель синтаксического разбора). Определен
+нетерминальный символ date; точка с запятой в конце определения, отделяющая
+правила друг от друга, в примере отсутствует, т.к. правило - единственное.
+<p>Лексический анализ сводится к выявлению чисел и строк с названиями месяцев,
+что задано следующей lex-спецификацией:
+<p><b>%{</b>
+<br><b>#include "y_tab.h"</b>
+<br><b>%}</b>
+<p><b>%%</b>
+<br><b>[0-9]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { return
+NUMBER; }</b>
+<br><b>jan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</b>
+<br><b>feb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</b>
+<br><b>...</b>
+<br><b>nov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</b>
+<br><b>dec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ return MONTH; }</b>
+<br><b>[ \t\n]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;</b>
+<br><b>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ return 0; }</b>
+<br><b>%%</b>
+<p><b>int yywrap() { return 1; }</b>
+<p>Согласно этой спецификации пробелы, табуляции и литеры новой строки
+поглощаются. Литера, не относящаяся к числам и названиям месяцев, "выключает"
+синтаксический разбор: возвращаемое значение ноль для синтаксического анализатора
+представляет маркер конца ввода. Имена NUMBER и MONTH - это константы,
+определения которых содержатся в файле y_tab.h, полученного в результате
+трансляции yacc-спецификации.
+<p>Файл zz.c содержит пользовательские определения функций main() и yyerror(char
+*). Последняя вызывается автоматически при обнаружении синтаксической ошибки,
+с аргументом, указывающим на строку "syntax error".
+<p><a NAME="trace"></a><font size=+1>4.2. Включение трассировки правил</font>
+<p>В примере константа YYDEBUG определена как ноль. Такое определение всегда
+выключает вывод сообщений, поясняющих процесс синтаксического анализа.
+Для включения вывода переменная окружения YYDEBUG должна быть установлена
+равной 1 (рекомендуется задать строку SET YYDEBUG=1 в autoexec.bat), а
+в yacc-спецификации константа YYDEBUG либо определяется равной 1, либо
+не определяется никак.
+<p>Задав вывод сообщений, заново подготовьте исполняемую программу первого
+примера и протестируйте ее. В сообщениях shift означает продолжение разбора
+правила, reduce - замену (сокращение) последовательности символов одним
+символом, в соответствии с некоторым правилом. В процессе разбора переключаются
+состояния (state) автомата, перечисленные в файле y.out.
+<p><a NAME="literals"></a><font size=+1>4.3. Литеральные лексемы</font>
+<p>Из заголовочного файла y_tab.h видно, что коды терминальных символов,
+определенных при помощи ключевого слова %token, начинаются с 257. Код 0
+зарезервирован для маркера конца ввода. Коды от 1 до 256 зарезервированы
+для литеральных лексем, или "литералов''.
+<p>Использование литералов иллюстрируется примером из подкаталога _DATE\V2.
+(Чтобы не создавать заново make-файл, скопируйте его из подкаталога _DATE\V1.)
+Получите исполняемую программу.
+<p>Изменение в yacc-спецификации:
+<p><b>date&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; MONTH&nbsp;&nbsp;&nbsp;&nbsp;
+NUMBER&nbsp;&nbsp;&nbsp;&nbsp; ','&nbsp;&nbsp;&nbsp;&nbsp; NUMBER</b>
+<p>Запятая в одиночных кавычках задает литерал - терминальный символ, код
+которого равен ASCII-коду запятой.
+<p>В lex-спецификации добавлено правило:
+<p><b>","&nbsp;&nbsp;&nbsp;&nbsp; return yytext[0];</b>
+<p>Самостоятельно протестируйте полученную исполняемую программу. Отметьте
+изменения в допустимой структуре ввода. Скорректируйте пример так, чтобы
+на месте запятой можно было бы использовать также точку с запятой.
+<p><a NAME="addon"></a><font size=+1>4.4. Сопутствующие значения</font>
+<p><a NAME="monotype"></a><font size=+1>4.4.1. Сопутствующие значения одного
+типа</font>
+<p>В рассмотренных примерах сопутствующие значения не формируются и не
+используются. Если бы лексический анализатор формировал сопутствующее лексеме
+значение, то синтаксический анализатор мог бы выводить дату в другом формате,
+а также проверять допустимость даты.
+<p>В примере из _DATE\V3 эти возможности реализованы. Лексический анализатор
+изменен следующим образом:
+<p><b>%{</b>
+<br><b>#include &lt;stdlib_h></b>
+<br><b>#include "y_tab.h"</b>
+<p><b>#define YYSTYPE int</b>
+<br><b>extern YYSTYPE yylval;</b>
+<br><b>%}</b>
+<p><b>%%</b>
+<br><b>[0-9]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { yylval
+= atoi (yytext); return NUMBER; }</b>
+<br><b>jan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ yylval = 0; return MONTH; }</b>
+<br><b>feb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ yylval = 1; return MONTH; }</b>
+<br><b>...</b>
+<br><b>dec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ yylval = 11; return MONTH; }</b>
+<p><b>","&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ return yytext[0]; }</b>
+<br><b>[ \t\n]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<br><b>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ return 0; }</b>
+<br><b>%%</b>
+<p><b>int yywrap() { return 1; }</b>
+<p>Добавлено определение типа YYSTYPE сопутствующего значение и ссылка
+на внешнюю переменную yylval, принадлежащую yyparse(). Значение, сопутствующее
+лексеме NUMBER, - это значение числа. Лексеме MONTH сопутствует номер месяца
+в диапазоне [0..11].
+<p>Использование сопутствующих значений синтаксическим анализатором организуется
+следующим образом. В процессе считывания лексем сопутствующие значения,
+возвращаемые в yyparse(), записываются в "стек значений'', и накапливаются
+там до тех пор, пока правило не будет применено. Значения в стеке доступны
+для действий, включенных в правила.
+<p><b>date&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; MONTH NUMBER
+',' NUMBER</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ print_date( $1, $2, $4 ); }</b>
+<p>$1 означает значение, сопутствующее первому символу правила, $2 - второму
+символу, и т.д. Литеральной лексеме ',' также сопутствует некоторое значение,
+оно записано в стек и доступно как $3, но смысла оно не имеет.
+<p>Для проверки допустимости даты использована библиотечная функция mktime,
+которая возвращает число секунд, прошедших с начала 1980 г. Результат -1
+означает ошибку в данных структуры типа tm.
+<p><a NAME="nonmonotype"></a><font size=+1>4.4.2. Сопутствующие значения
+различных типов</font>
+<p>В рассмотренном примере все сопутствующие значения имели один и тот
+же тип - int. Часто может требоваться возвращать сопутствующие значения
+разных типов, например, int и char*, при том, что `канал передачи' значений
+от yylex() к yyparse() единственный - переменная yylval.
+<p>В такой ситуации следует воспользоваться объявлением типа сопутствующего
+значения в виде объединения. Рассмотрим примеры из _DATE\V4. Во всех трех
+вариантах (_date1.y, _date2.y, _date3.y) определение объединенного типа
+выглядит как:
+<p><b>%union</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; int ival;</b>
+<br><b>&nbsp;&nbsp;&nbsp; char *text;</b>
+<br><b>};</b>
+<p>Поскольку теперь возможны два типа сопутствующих значений, требуется
+дополнительная информация для подстановки псевдопеременных $1, $2, $4.
+В _date1.y такая информация не задана, и трансляции не проходит. В _date2.y
+тип уточнен непосредственно в обозначении псевдопеременной:
+<p><b>date&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; MONTH NUMBER
+',' NUMBER</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ print( $&lt;text>1, $&lt;ival>2, $&lt;ival>4 ); }</b>
+<p>В примере _date3.y тип связан с терминальным символом, и уточнять тип
+каждого экземпляра псевдопеременных теперь не требуется:
+<p><b>%token &lt;ival>NUMBER</b>
+<br><b>%token &lt;text>MONTH</b>
+<br><b>...</b>
+<br><b>%%</b>
+<br><b>date&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; MONTH NUMBER
+',' NUMBER</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ print( $1, $2, $4 ); }</b>
+<p>В лексическом анализаторе обращение к yylval теперь записано как обращение
+к членам union:
+<p><b>[0-9]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { yylval.ival
+= atoi (yytext); return NUMBER; }</b>
+<br><b>jan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</b>
+<br><b>feb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</b>
+<br><b>...</b>
+<br><b>dec&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ yylval.text = strdup (yytext); return MONTH; }</b>
+<p>В результате использования %union определение YYSTYPE (в форме C-объединения)
+попадает в заголовочный файл y_tab.h.
+<p>Заметим, что при формировании указателя строки использована функция
+strdup, дублирующая содержимое yytext в динамической памяти. Ошибкой была
+передача ссылки непосредственно на yytext (yylval.text = &amp;yytext[0]),
+т.к. к моменту использования этой ссылки функцией print содержимое yytext
+изменится (будет содержать цифры).
+<p><a NAME="nonterminals"></a><font size=+1>4.4.3. Значения, сопутствующие
+нетерминальным символам</font>
+<p>В предыдущих примерах в стек значений записывалось содержимое yylval,
+устанавливаемое лексическим анализатором, и сопутствующее терминальным
+символам. Yacc позволяет также:
+<p>- изменять значения в стеке;
+<br>- формировать значения, сопутствующие нетерминальным символам.
+<p>Величина, сопутствующая нетерминальному символу, обозначается как $$.
+Отметим, что $$ и $1 фактически ссылаются на одну и ту же запись стека,
+откуда и следует "действие по умолчанию'': $$ = $1. Тип $$ при использовании
+%union может быть уточнен принудительно для каждого обращения к $$, в форме:
+<p><b>$&lt;type>$</b>
+<p>Удобнее связывать тип с нетерминальным символом в секции определений,
+в форме:
+<p><b>%type sym</b>
+<p>Рассмотрим пример из _DATE\V5. В _date1.y определен синтаксический анализатор,
+вычисляющий количество дней между двумя датами (обратите внимание на изменение
+стартового символа):
+<p><b>%union {</b>
+<br><b>&nbsp;&nbsp;&nbsp; int ival;</b>
+<br><b>&nbsp;&nbsp;&nbsp; long lval;</b>
+<br><b>};</b>
+<p><b>%token&nbsp;&nbsp;&nbsp;&nbsp; &lt;ival>&nbsp;&nbsp;&nbsp; NUMBER
+MONTH</b>
+<br><b>%type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;lval>&nbsp;&nbsp;&nbsp;
+date</b>
+<br><b>%start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; between</b>
+<p><b>%%</b>
+<br><b>date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;
+MONTH NUMBER ',' NUMBER</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ $$ = abs_date( $1, $2, $4 ); }</b>
+<p><b>between&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; date '-'
+date</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ printf( "%ld\n", ($1 - $3)/(3600L * 24L)); }</b>
+<p>Здесь сопутствующее значение может быть двух типов:
+<p>- int - для номеров дня, месяца и года;
+<br>- long - для значения, сопутствующего date.
+<p>Нетерминальному символу date сопутствует количество секунд, прошедших
+от начала 1980 г. до заданной даты.
+<p>Вариант _date2.y демонстрирует изменение значений в стеке и применение
+действия внутри правила:
+<p><b>between&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+date</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ $&lt;lval>$ = $1 / (3600L * 24L); }</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+'-'</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+date</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ $4 = $4/(3600L * 24L);</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "%ld\n", $&lt;lval>2 - $4 ); }</b>
+<p>Действие в середине правила трактуется как отдельный нетерминальный
+псевдосимвол, с собственным сопутствующим значением (для которого резервируется
+запись в стеке). В таких действиях псевдопеременная $$ ссылается на значение,
+сопутствующее псевдосимволу. Поскольку тип значения, сопутствующего псевдосимволу,
+не очевиден, пришлось уточнять тип при каждом обращении к соответствующей
+записи стека.
+<p><a NAME="recursion"></a><font size=+1>5. Рекурсивные правила.</font>
+<p>В подкаталоге LIST\V1 приведен пример использования рекурсии для задания
+списка чисел, разделенных запятыми. В трех вариантах примера элементы списка
+выводятся в различном порядке. Разберите эти примеры самостоятельно.
+<p>Разбор следующих примеров использования рекурсии в правилах необязателен.
+<p>В подкаталоге LIST\V2 - пример обработки вложенных списков чисел, используемых
+при определении данных в ассемблерах для i80x86 (вложенность возникает
+при включении конструкции dup - см. тестовый файл с расширением in).
+<p>В подкаталоге BS - пример реализации некоторых конструкций циклов структурного
+ассемблера.
+<p>В подкаталоге CALC - пример реализации калькулятора.
+<p><a NAME="resolve"></a><font size=+1>6. Управление правилами. Разрешение
+двусмысленностей</font>
+<p>В этом разделе кратко рассматривается разрешения двусмысленностей. Вопросы
+приоритетности и ассоциативности (имеющие отношение, в основном, к разбору
+арифметических конструкций), в данной работе не рассматриваются.
+<p>Если при поиске лексемы входная последовательность может быть распознана
+несколькими шаблонами, то набор правил двусмысленный.
+<p>Двусмысленности отмечаются при трансляции предупреждениями:
+<p>- shift/reduce conflict - выбор между немедленным применением одного
+правила и продолжением разбора в соответствии с другим правилом.
+<p>- reduce/reduce conflict - выбор между немедленным применением того
+или иного правила.
+<p>При таких конфликтах правило выбирается по следующей схеме, напоминающей
+схему, принятую в lex:
+<p>1) Предпочтение отдается соответствию большей длины, т.е. столкновение
+shift/reduce разрешается в пользу shift.
+<p>2) Если одна и та же последовательность соответствует нескольким правилам
+(столкновение reduce/reduce), предпочтение отдается тому правилу, которое
+задано раньше других.
+<center>
+<p><a NAME="tasks"></a><b><font size=+1>Программа работы</font></b></center>
+
+<p>1. Протестировать примеры.
+<br>2. Выполнить индивидуальное задание.
+<br>3. Представить отчёт в форме, согласованной с преподавателем.
+<br>&nbsp;
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (Win98; I) [Netscape]">
+   <title>compilers</title>
+</head>
+<body>
+
+<center><font size=+1>Лабораторная работа по курсу "Транслирующие системы"</font>
+<p><font size=+2>Построение лексических анализаторов</font>
+<br><font size=+2>(утилита lex)</font></center>
+
+<p><font size=+1><a href="#goal">Цель работы</a></font>
+<br><font size=+1><a href="#tools">Инструментальные средства</a></font>
+<br><font size=+1><a href="#didakt">Методические указания</a></font>
+<br><a href="#introduction">1. Введение</a>
+<br><a href="#make">2. Получение исполнимой программы лексического анализа</a>
+<br><a href="#review">3. Обзор структуры и синтаксиса программы на языке
+lex</a>
+<br><a href="#definitions">3.1. Секция определений</a>
+<br><a href="#rules">3.2. Секция правил</a>
+<br><a href="#procedures">3.3. Секция процедур</a>
+<br><a href="#howto">4. Правила</a>
+<br><a href="#regular">4.1. Регулярные выражения</a>
+<br><a href="#actions">4.2. Действия</a>
+<br><a href="#admin">4.3. Управление правилами</a>
+<br><a href="#resolve">4.3.1. Разрешение двусмысленностей</a>
+<br><a href="#start">4.3.2. Стартовые условия</a>
+<br><a href="#reject">4.3.3. Действие REJECT</a>
+<br><font size=+1><a href="#tasks">Программа работы</a></font>
+<p>
+<hr WIDTH="100%">
+<center><a NAME="goal"></a><b><font size=+1>Цель работы</font></b></center>
+
+<p>Цель работы - изучение и получение навыков применения утилиты lex для
+генерирования лексических анализаторов.
+<center>
+<p><a NAME="tools"></a><b><font size=+1>Инструментальные средства</font></b></center>
+
+<p>В качестве инструментальных средств рекомендуется использовать системные
+программы ОС LINUX (Mandrake 9.2): утилиту lex (flex) и компилятор программ
+на языке С - gcc. Для сравнения функциональных возможностей различных реализаций
+lex-генератора рекомендуется выполнить работу также в среде ОС MS WINDOWS
+(Windows 9x/2k) (с применением утилиты командной строки flex v2.5 и системы
+программирования на языке C QuickC v2.5 или MS Visual C++ v.5/6).
+<center>
+<p><a NAME="didakt"></a><b><font size=+1>Методические указания</font></b></center>
+
+<p><a NAME="introduction"></a><font size=+1>1. Введение</font>
+<p>Lex - это генератор программ лексической обработки текстов. Основу исходной
+lex-программы составляет таблица регулярных выражений - "шаблонов'', и
+соответствующих им "действий'', которые задаются пользователем в виде фрагментов
+на языке C.
+<p>Исходная программа транслируется lex в модуль на языке C, в котором
+определена глобальная функция yylex(). Каждое обращение к yylex() возобновляет
+обработку текущего входного потока до получения очередной лексемы; при
+обнаружении лексемы yylex() выполняет действие, связанное с шаблоном, который
+распознал лексему. Цикл обращений к yylex() программируется отдельно; он
+должен завершаться при возвращении yylex() нулевого результата (конец входного
+потока).
+<p>Если функция yylex() не смогла поставить в соответствие текущему входному
+потоку ни один из шаблонов, выполняется действие по умолчанию - очередная
+литера копируется в выходной поток.
+<p>Пример исходного текста программы, которая копирует в выходной поток
+все кроме пробелов и/или табуляций в начале строки:
+<p><b>/* ex1.l */</b>
+<br><b>%%</b>
+<br><b>^[ \t]+&nbsp;&nbsp;&nbsp;&nbsp; ;</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Между разделителями "%%'' заданы правила, каждое в форме "шаблон'' "действие''.
+Правило в примере содержит шаблон "^[ \t]+'' и "пустое'' действие ";''.
+Квадратные скобки задают одну литеру из записанных внутри скобок: "[ \t]''
+означает "пробел или табуляция''. Операторная литера "+'' задает ненулевое
+число повторений, а "^'' - начало строки входного потока.
+<p>Т.к. действие пустое, то последовательности, распознаваемые этим правилом,
+игнорируются. Все прочие последовательности останутся нераспознанными и
+будут скопированы в выходной поток.
+<p>Примечание:
+<p>Все что задано после второго разделителя "%%'' при трансляции переписывается
+в конец результирующей C-программы без изменений. В файле yy.c заданы минимальные
+версии функций main() и yywrap():
+<p><b>int yywrap() { return( 1 ); }</b>
+<p><b>main()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; while( yylex() );</b>
+<br><b>}</b>
+<p>Назначение yywrap() выяснится в дальнейшем.
+<p><a NAME="make"></a><font size=+1>2. Получение исполнимой программы лексического
+анализа</font>
+<p>Генерация лексического анализатора (сканера) производится в два этаиа:
+<p>1) трансляция описания грамматических правил в программу на языке С;
+<br>2) компиляция исполнимой программы сканера.
+<p>На первом этапе применяется lex-транслятор. Запуск утилиты производится
+из командной строки в следующем виде:
+<p><b>/usr/bin/flex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -w&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+infile.l</b>&nbsp;&nbsp;&nbsp; (для ОС LINUX)
+<br><b>flex.exe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-l -o&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; outfile.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+infile.l&nbsp;&nbsp;&nbsp; </b>(для ОС MS WINDOWS)
+<p>где
+<br>infile.l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;
+имя файла lex-программы,
+<br>outfile.c&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp; имя файла результирующей
+программы на языке C,
+<br>опция&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>-w&nbsp; </b>отменяет генерацию
+предупреждений о возможных ошибках (warnings)
+<br>опция&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>-l</b>&nbsp;&nbsp;&nbsp; включает
+режим наибольшего соответствия UNIX-lex.
+<br>опция&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>-o</b>&nbsp;&nbsp; означает
+явное задание имени выходного файла.
+<p>Примечание:
+<p>В среде ОС LINUX рекомендуется использовать имя выходного файла lex-транслятора,
+заданное по умолчанию - lex.yy.c.
+<p>На втором этапе осуществляется компиляция программы лексического анализатора.
+В среде ОС LINUX используется командная строка вида:
+<p><b>gcc&nbsp;&nbsp;&nbsp;&nbsp; -o&nbsp;&nbsp;&nbsp;&nbsp; scaner.out&nbsp;&nbsp;&nbsp;&nbsp;
+scaner.c</b>
+<p>где
+<br>scaner.c&nbsp;&nbsp;&nbsp;&nbsp; - имя исходного кода программы-сканера
+(как правило, это - lex.yy.c);
+<br>scaner.out&nbsp; - имя исполнимого кода программы-сканера.
+<p>В среде MS WINDOWS для компиляции программ, как правило, используются
+системы программирования. Поэтому для получения исполнимого (exe) файла
+необходимо знать особенности работы в выбранной системе программирования.
+Применительно к системе программирования QuickC имеем следующий порядок
+действий:
+<p>- убедитесь в том, что С-программа сканера (например, scaner.c) и файл
+yy.c расположены в одном каталоге;
+<br>- запустите QuickC:
+<p><b>qc.exe scaner.c</b>
+<p>- в среде системы QuickC получите исполняемую программу, выбрав пункт
+Make/Build;
+<br>- завершите работу с QuickC (Alt-F4).
+<p>Проверка работоспособности лексического анализатора осуществляется стандартным
+образом:
+<p><b>./scaner&nbsp;&nbsp; &lt;&nbsp;&nbsp; text.in&nbsp;&nbsp;&nbsp; >&nbsp;&nbsp;&nbsp;
+text.out</b>&nbsp;&nbsp;&nbsp;&nbsp; (для ОС LINUX)
+<br><b>scaner&nbsp;&nbsp;&nbsp;&nbsp; &lt;&nbsp;&nbsp; text.in&nbsp;&nbsp;&nbsp;
+>&nbsp;&nbsp;&nbsp; text.out</b>&nbsp;&nbsp;&nbsp;&nbsp; (для ОС WINDOWS)
+<p>где
+<br>scaner&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp; исполнимый файл программы-сканера;
+<br>text.in&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp; входной файл сканера;
+<br>text.out&nbsp;&nbsp; -&nbsp;&nbsp; выходный файл сканера.
+<p>Замечание:
+<p>Угловые скобки в командной строке обозначают перенаправление входного
+(<b>&lt;</b>) и выходного (<b>></b>) потоков команды.
+<p>Сравните файлы text.in и text.out. Если вы запустили исполнимую программу
+лексического анализатора, не перенаправляя стандартные входной и выходной
+потоки, завершение входного потока нужно задать вводом Ctrl-Z (отображается
+как "^Z'') и Enter. Напомним также, что консоль задерживает выдачу данных
+в выходной поток до завершения ввода строки.
+<p>Возможны ситуации, когда от лексического анализатора требуется распознавать
+все входные последовательности. Тестирование такого анализатора упрощается,
+если опцией "-s'' блокировать действие по умолчанию.
+<br>Тогда для ОС MS WINDOWS имеем:
+<p><b>flex.exe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-s -l -o&nbsp;&nbsp;&nbsp; outfile.c&nbsp;&nbsp; infile.l0</b>
+<p>Аналогичную опцию для ОС LINUX рекомендуется выясниь самостоятельно
+с помощью следующей командной строки:
+<p><b>/usr/bin/flex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -h</b>
+<p>Вместо того, чтобы копировать нераспознанные последовательности в выходной
+поток, полученный лексический анализатор будет выводить сообщение об ошибке
+"flex scanner jammed" (сканер, сгенерированный flex, в затруднении) с аварийным
+завершением.
+<p>Ниже приведено описание языка lex. Предварительно предлагается краткий
+обзор справочного характера; в дальнейшем новые понятия рассматриваются
+более подробно, с примерами.
+<p><a NAME="review"></a><font size=+1>3. Обзор структуры и синтаксиса программы
+на языке lex</font>
+<p>Общая форма исходного текста lex-программы:
+<p><i>определения</i>
+<br><b>%%</b>
+<br><i>правила</i>
+<br><b>%%</b>
+<br><i>процедуры пользователя</i>
+<p>Обязательна только секция правил; ограничивается парой разделителей
+"%%'', даже при отсутствии других секций.
+<p><a NAME="definitions"></a><font size=+1>3.1. Секция определений</font>
+<p>Секция определений может содержать (в любой последовательности):
+<p>- макроопределения регулярных выражений, без отступов, в форме:
+<br>"name pattern"
+<p>- включаемый код на языке C, с отступом, в форме:
+<br>"code"
+<p>- включаемый код на языке C, без отступов, в форме:
+<br><b>%{</b>
+<br><i>code</i>
+<br><b>%}</b>
+<p>- стартовые условия, без отступов, в форме:
+<br><b>%S </b><i>cond1, cond2 ...</i>
+<p>- комментарии в стиле языка C, без отступов.
+<p>Пример:
+<p><b>{digit}&nbsp;&nbsp;&nbsp;&nbsp; [0-9]</b>
+<p><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+int count = 0&nbsp;&nbsp;&nbsp; ;</b>
+<p><b>%{</b>
+<br><b>#include &lt;stdlib.h></b>
+<br><b>#define YY_USER_ACTION crap();</b>
+<br><b>%}</b>
+<p><b>%S comment, newPage</b>
+<p><b>/* macro, C-fragments, start conditions */</b>
+<p><a NAME="rules"></a><font size=+1>3.2. Секция правил</font>
+<p>Правила задаются без отступа, каждое в форме "шаблон действие".
+<p>Действие - это один оператор языка C; допускается составной оператор
+(т.е. последовательность простых операторов, заключенная в фигурные скобки),
+тогда действие может быть записано в нескольких строках.
+<p>В шаблонах могут использоваться как обычные, так и операторные литеры:
+<p>"&nbsp; \&nbsp;&nbsp; [&nbsp;&nbsp; ]&nbsp;&nbsp; ^&nbsp;&nbsp; -&nbsp;&nbsp;
+?&nbsp;&nbsp; .&nbsp;&nbsp; *&nbsp;&nbsp; +&nbsp;&nbsp; |&nbsp;&nbsp; (&nbsp;&nbsp;
+)&nbsp;&nbsp; $&nbsp;&nbsp; /&nbsp;&nbsp; {&nbsp;&nbsp; }&nbsp;&nbsp; &lt;&nbsp;&nbsp;
+>
+<p>Значения операторных литер:
+<p>"x"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "x", даже если x
+- оператор
+<br>\x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "x", даже
+если x - оператор
+<br>[xy]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; литера x или y
+<br>[x-z]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; литера в диапазоне от x до z
+<br>[^x]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; любая литера кроме x
+<br>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+любая литера кроме новой строки
+<br>^x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x в начале строки
+<br>&lt;y>x&nbsp;&nbsp;&nbsp;&nbsp; x, если стартовое состояние y
+<br>x$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x в конце строки
+<br>x?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; необязательное x
+<br>x*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0,1,2, ... экземпляров
+x
+<br>x+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,2,3, ... экземпляров
+x
+<br>x|y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x или y
+<br>(x)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x
+<br>x/y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x, но только если за
+ним y
+<br>{xx}&nbsp;&nbsp;&nbsp;&nbsp; макроподстановка xx
+<br>x{m,n}&nbsp; от m до n появлений x
+<br>x{m,}&nbsp;&nbsp;&nbsp; m и более появлений x
+<br>x{m}&nbsp;&nbsp;&nbsp;&nbsp; m появлений x
+<p>Между начальным разделителем "%%'' и первым правилом может быть задан
+- с отступом - фрагмент на языке С. Он копируется в тот участок C-программы,
+который выполняется один раз после запуска; здесь также можно поместить
+определения локальных для yylex() переменных.
+<p><a NAME="procedures"></a><font size=+1>3.3. Секция процедур</font>
+<p>Все, что следует после второго разделителя "%%'', переносится в C-программу
+без анализа и изменений; отступы роли не играют.
+<p><a NAME="howto"></a><font size=+1>4. Правила</font>
+<p>Вопросы, имеющие отношение к разделу правил, следующие:
+<p>- регулярные выражения;
+<br>- действия;
+<br>- управление правилами.
+<p><a NAME="regular"></a><font size=+1>4.1. Регулярные выражения</font>
+<p>Шаблоны, определяющие классы искомых последовательностей литер, записываются
+с применением регулярных выражений - в нотации, аналогичной принятой в
+UNIX-утилитах awk, qed и sed. Термины "шаблон'' и "регулярное выражение''
+в дальнейшем используются как синонимы. Регулярное выражение формируется
+конкатенацией литер и, в общем случае, некоторых операторов. Нотация, принятая
+в lex, следующая:
+<p>--- Последовательность литер без операторов задает себя буквально. Например,
+шаблон для сопоставления со словом `integer`:
+<p>&nbsp;<b>&nbsp;&nbsp; integer</b>
+<p>--- Для включения пробельных литер в последовательность регулярное выражение
+надо заключить в двойные кавычки. Так, последовательность `silly things`
+может быть задана шаблоном:
+<p>&nbsp;&nbsp;&nbsp;<b> "silly things"</b>
+<p>--- Выражение, за которым следует оператор `*`, означает ноль или более
+появлений этого выражения. Например, последовательность из любого числа
+литер `m`, в том числе пустая последовательность, может быть задана как:
+<p><b>&nbsp;&nbsp;&nbsp; m*</b>
+<p>--- Выражение, за которым следует оператор `+`, соответствует одному
+или более экземплярам этого выражения. Например, последовательность из
+одной или более литер `m` задается выражением:
+<p><b>&nbsp;&nbsp;&nbsp; m+</b>
+<p>--- Выражению, за которым следует оператор `?`, соответствует 0 или
+1 экземпляр этого выражения (т.о. выражение необязательно). Например, для
+задания одного экземпляра `m` либо ничего, используйте:
+<p><b>&nbsp;&nbsp;&nbsp; m?</b>
+<p>--- Точка `.` соответствует любой литере кроме новой строки. Например,
+последовательность из пяти букв, которая начинается с `m` и заканчивается
+`y`, может быть обозначена как:
+<p><b>&nbsp;&nbsp;&nbsp; m...y</b>
+<p>--- Альтернатива обозначается `|`. Например, сопоставление либо с `love`,
+либо с `money`, можно задать как:
+<p><b>&nbsp;&nbsp;&nbsp; love|money</b>
+<p>--- Выражения могут быть сгруппированы с использованием скобок '(' ')'.
+Например, последовательность, состоящая из любого числа экземпляров `a`
+и `b`, за которыми следует одно `c`, может быть задана как:
+<p><b>&nbsp;&nbsp;&nbsp; (a|b)*c</b>
+<p>--- Знак `^` перед шаблоном означает, что шаблон должен быть выявлен
+в начале строки. Следующее правило соответствует слову `First` в начале
+строки:
+<p><b>&nbsp;&nbsp;&nbsp; ^First</b>
+<p>--- Знак `$` в конце шаблона задает сопоставление в конце строки. Следующее
+правило соответствует слову `cow` в конце строки:
+<p><b>&nbsp;&nbsp;&nbsp; cow$</b>
+<p>--- Чтобы шаблон был распознан заданное число раз подряд, после него
+нужно указать число в фигурных скобках. Так, чтобы выявить `cdcdcd`, можно
+использовать:
+<p><b>&nbsp;&nbsp;&nbsp; (cd){3}</b>
+<p>--- Чтобы задать число повторений в некотором диапазоне, после выражения
+записываются два числа через запятую в фигурных скобках. Так, чтобы выявить
+3, 4, или 5 повторений `ab`, т.е. `ababab`, `abababab` или `ababababab`,
+используйте:
+<p><b>&nbsp;&nbsp;&nbsp; (ab){3,5}</b>
+<p>--- Если число повторений должно быть не меньше некоторого предела,
+то в фигурных скобках после выражения записывается одно число с запятой.
+Так, чтобы выявить не менее двух повторений `ab`, задайте:
+<p><b>&nbsp;&nbsp;&nbsp; (ab){2,}</b>
+<p>--- Последовательность литер в квадратных скобках '[' ']' соответствует
+любой литере этой последовательности. Например, для выявления одной из
+литер `d`, `g`, `k`, `a` используйте:
+<p><b>&nbsp;&nbsp;&nbsp; [dgka]</b>
+<p>Внутри квадратных скобок только три литеры являются специальными:
+<p><b>`\'&nbsp;&nbsp;&nbsp;&nbsp; `-'&nbsp;&nbsp;&nbsp;&nbsp; `^'</b>
+<p>--- Если литера '^' задана первой внутри квадратных скобок, то шаблон
+соответствует любой литере, которая не входит в оставшуюся последовательность.
+Например, для задания любой литеры кроме `a`, `b` и `c` используйте:
+<p><b>&nbsp;&nbsp;&nbsp; [^abc]</b>
+<p>--- Диапазоны в пределах стандартного порядка букв или цифр задаются
+посредством дефиса `-`. Следующее выражение соответствует любой цифре и
+любой букве, как нижнего, так и верхнего регистра:
+<p><b>&nbsp;&nbsp;&nbsp; [0-9A-Za-z]</b>
+<p>--- Регулярные выражения могут быть сцеплены. Например, следующее выражение
+выявляет идентификатор во многих языках программирования (начинается с
+буквы, за которой следует ноль или более букв и/или цифр):
+<p><b>[a-zA-Z][0-9a-zA-Z]*</b>
+<p>--- Чтобы специальные литеры в шаблонах трактовались буквально, их либо
+заключают в двойные кавычки, либо перед каждой ставят `\`. Любое из следующих
+выражений может быть использовано для сопоставления с `*`, за которой следует
+одна или более цифр:
+<p><b>&nbsp;&nbsp;&nbsp; \*[0-9]+</b>
+<br><b>&nbsp;&nbsp;&nbsp; "*"[0-9]+</b>
+<p>Буквальное задание литеры `\` возможно в двух вариантах:
+<p><b>&nbsp;&nbsp;&nbsp; \\</b>
+<br><b>&nbsp;&nbsp;&nbsp; "\"</b>
+<p>Для задания новой строки, табуляции и т.п. используются обозначения,
+принятые в языке C:
+<p><b>&nbsp;&nbsp;&nbsp; `\n`</b>&nbsp;&nbsp;&nbsp;&nbsp; конец строки
+<br><b>&nbsp;&nbsp;&nbsp; '\t'</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; табуляция
+<p>--- Литера '/' задает правый, или т.н. ``концевой'' контекст: выявляется
+последовательность, заданная шаблоном слева от '/', но только если к этой
+последовательности примыкает та, что задана шаблоном справа от '/'. Например,
+задать `ab', но только если за ней следует `cd' можно следующим образом:
+<p><b>&nbsp;&nbsp;&nbsp; ab/cd</b>
+<p><a NAME="actions"></a><font size=+1>4.2. Действия</font>
+<p>Действие - это заданный на языке C фрагмент кода, который выполняется
+при выявлении соответствующего шаблона. Обычно действия содержат такие
+операции, как преобразование выявленной строки - лексемы, возвращение типа
+лексемы процедуре грамматического разбора, или сбор статистики о входном
+потоке.
+<p>Простейшее действие вообще не содержит операторов - это пустое действие,
+которое по правилам языка C задается в виде `;`. Входной текст при этом
+игнорируется. Напротив, последовательность литер, не соответствующая ни
+одному шаблону из секции правил, копируется в стандартный выход. Например,
+часто используемое правило:
+<p><b>[ \t\n]&nbsp;&nbsp;&nbsp;&nbsp; ;</b>
+<p>позволяет игнорировать три пробельных литеры (собственно пробел, табуляцию
+и новую строку). Если задано только одно это правило, все остальные литеры
+копируются в выходной поток.
+<p>В следующем примере распознаются все возможные литеры, за счет чего
+правило по умолчанию не используется. Полезная работа этой программы сводится
+к подсчету количества строк.
+<p><b>/* ex2.l0 */</b>
+<br><b>&nbsp;&nbsp;&nbsp; int lineno = 0;</b>
+<br><b>%%</b>
+<br><b>\n&nbsp;&nbsp;&nbsp;&nbsp; lineno++;</b>
+<br><b>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;</b>
+<br><b>%%</b>
+<br><b>yywrap()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/* !!! */</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf( "%d lines\n",
+lineno );</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return( 1 );</b>
+<br><b>}</b>
+<br><b>main()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; while( yylex() );</b>
+<br><b>}</b>
+<p>Функция yywrap(), определяемая пользователем, вызывается при завершении
+входного потока. Чтобы лексический анализатор закончил работу, функция
+yywrap() должна вернуть ненулевой результат. Пример определения yywrap()
+см. также в yy.c.
+<p>--- yytext, yyleng
+<p>Входная последовательность, будучи распознана некоторым правилом, сохраняется
+в массиве yytext, а ее длина записывается в переменную yyleng.
+<p>Пользователь может изменять содержимое yytext в пределах первых yyleng
+позиций. В частности, последняя литера найденной строки доступна как yytext[yyleng-1].
+<p>В следующем примере задан подсчет последовательностей, которые обозначают
+знаковые целые числа; каждый раз при обнаружении такой последовательности
+выводится текущее значение счетчика и текст лексемы:
+<p><b>/* ex3.l */</b>
+<br><b>%{</b>
+<br><b>int count = 0;</b>
+<br><b>%}</b>
+<br><b>%%</b>
+<br><b>[-+]?[0-9]+&nbsp;&nbsp; {</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+count++;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "%d %s\n", count, yytext );</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Вывод содержимого yytext - действие настолько распространенное, что
+для него определена макрокоманда ECHO. В следующем примере в выходной поток
+переписываются идентификаторы и беззнаковые числа, по одному на строке:
+<p><b>/* ex4.l0 */</b>
+<br><b>%%</b>
+<br><b>[0-9]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</b>
+<br><b>[a-zA-Z]+&nbsp;&nbsp;&nbsp;&nbsp; { ECHO; printf( "\n" ); }</b>
+<br><b>.&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; \n&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Литера ``|'' вместо действия означает ``то же действие, что и для следующего
+правила''.
+<p>В качестве примера использования yyleng приведена программа подсчета
+идентификаторов по длине, в диапазоне длины от 1 до 40 (гистограмма длин
+слов).
+<p><b>/* ex5.l0 */</b>
+<br><b>&nbsp;&nbsp;&nbsp; int len[40];</b>
+<br><b>&nbsp;&nbsp;&nbsp; int i;</b>
+<br><b>%%</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+for( i = 0; i &lt; 40; i++ )</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+len[i] = 0;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</b>
+<br><b>[a-z]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; len[yyleng]++;</b>
+<br><b>.&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; \n&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<br><b>%%</b>
+<br><b>yywrap()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; for( i = 0; i &lt; 40; i++ )</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+if( len[i] > 0 ) printf( "%5d%10d\n", i, len[i] );</b>
+<br><b>&nbsp;&nbsp;&nbsp; return( 1 );</b>
+<br><b>}</b>
+<br><b>main()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; while( yylex() );</b>
+<br><b>}</b>
+<p>Функции yymore(), yyless(n) предоставляют дополнительные возможности
+по управлению yytext:
+<p>--- yymore()
+<p>Когда очередная лексема записывается в массив yytext, предыдущее содержимое
+yytext теряется. Функция yymore() временно отключает режим "перезаписи''
+для следующего (одного) сопоставления, т.е. литеры следующей лексемы будут
+добавлены к текущему содержимому yytext.
+<p>--- yyless(n) Функция yyless(n) сокращает содержимое yytext до n первых
+литер, возвращая остальные во входной поток.
+<p>Следующий лексический анализатор удаляет первые пять букв из любого
+слова, которое начинается с большой буквы и содержит более пяти литер:
+<p><b>/* ex6.l */</b>
+<br><b>%{</b>
+<br><b>#define limit 5</b>
+<br><b>%}</b>
+<br><b>%%</b>
+<br><b>[A-Z][a-z]*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(
+yyleng > limit ) yyless( limit );</b>
+<br><b>[a-z]*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ECHO;</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Пользователь также может обращаться к функциям низкоуровневого ввода-вывода,
+которые используются лексическим анализатором:
+<p>--- input() - чтение следующей литеры входного потока (в конце потока
+считывается null-литера);
+<br>--- output(c) - запись литеры "c'' в выходной поток;
+<br>--- unput(c) - "запись'' литеры во входной поток.
+<p>В следующем примере функция input() используется для поиска конца комментария,
+заданного в стиле языка C:
+<p><b>/* ex7.l */</b>
+<br><b>%{</b>
+<br><b>void skip_comments();</b>
+<br><b>%}</b>
+<br><b>D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [0-9]</b>
+<br><b>H&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [0-9A-Fa-f]</b>
+<br><b>L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [_A-Za-z]</b>
+<br><b>%%</b>
+<br><b>{L}({L}|{D})*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(
+"ident: %s\n", yytext );</b>
+<br><b>0{H}+(H|h)?&nbsp;&nbsp;&nbsp;&nbsp; |</b>
+<br><b>{D}{H}*(H|h)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(
+"hex: %s\n", yytext );</b>
+<br><b>{D}+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "decimal: %s\n", yytext );</b>
+<br><b>"/*"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+skip_comments();</b>
+<br><b>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<br><b>%%</b>
+<br><b>void skip_comments()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; char c = '*';</b>
+<br><b>&nbsp;&nbsp;&nbsp; while( c != '/' ) {</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while( input() != '*'
+);</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+c = input();</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+if( c != '/' ) unput (c);</b>
+<br><b>&nbsp;&nbsp;&nbsp; }</b>
+<br><b>}</b>
+<br><b>#include "yy.c"</b>
+<p>Функция unput() в skip_comments() предназначена для обработки частного
+случая типа "/*?**/'' (подряд более одной "*'' перед "/''). Заметим, что
+в примере отсутствует проверка конца входного потока (значение, возвращаемое
+input(), не проверяется на равенство нулю), и незакрытый комментарий приведет
+к зацикливанию в процедуре skip_comments.
+<p>В примере определены правила для распознавания десятичных и 16-ричных
+констант (в стиле A86) и идентификаторов. Для сокращения записи этих правил
+в разделе определений заданы макроопределения шаблонов, обозначающих буквы,
+десятичные и 16-ричные цифры; подстановки в разделе правил заданы именами
+макроопределений в фигурных скобках.
+<p>Замечание:
+<p>Если бы в разделе определений не было бы опережающего описания void-функции
+skip_comments, транслятор с языка C присвоил бы этой функции тип int. Тип
+int действует по умолчанию, если задано обращение к еще неизвестной функции,
+или если не задано никакого типа при определении функции (см., например,
+yy.c). В таких ситуациях отсутствие оператора return в теле функции при
+трансляции в QuickC может привести к непонятным косвенным ошибкам.
+<p>Функции unput() и input() подобны машинным инструкциям push и pop: порядок
+чтения противоположен порядку записи. В следующем примере задано реверсирование
+идентификаторов с префиксом '@':
+<p><b>/* ex8.l */</b>
+<br><b>/* @Zoom -> mooZ */</b>
+<br><b>&nbsp;&nbsp;&nbsp; int i;</b>
+<br><b>%%</b>
+<br><b>\@[A-Za-z]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+for( i = 1; i &lt; yyleng; i++ )</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+unput( yytext[i] );</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p><a NAME="admin"></a><font size=+1>4.3. Управление правилами</font>
+<p>В этом разделе рассматриваются вопросы, касающиеся выбора правил при
+сопоставлении, а также возможностей управления набором правил:
+<p>- разрешение двусмысленностей;
+<br>- стартовые условия;
+<br>- действие REJECT.
+<p><a NAME="resolve"></a><font size=+1>4.3.1. Разрешение двусмысленностей</font>
+<p>Если при поиске лексемы входная последовательность может быть распознана
+несколькими шаблонами, то набор правил двусмысленный. В этой ситуации правило
+выбирается по следующей схеме:
+<p>1) Предпочтение отдается соответствию большей длины.
+<br>2) Если одна и та же последовательность соответствует нескольким правилам,
+предпочтение отдается тому правилу, которое задано раньше других.
+<p>Рассмотрим пример:
+<p><b>/* ex9.l */</b>
+<br><b>%%</b>
+<br><b>read&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { printf( "operation:
+" ); ECHO; }</b>
+<br><b>[a-z]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { printf( "identifier:
+" ); ECHO; }</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Ввод "ready '' принимается вторым правилом, т.к. "[a-z]+'' распознает
+все 5 литер ("ready''), в то время как первое правило - только 4 ("read'').
+При вводе "read'' оба правила распознают одинаковое число литер - 4 ("read''),
+и поэтому будет выбрано первое правило, т.к. оно задано раньше. Ввод меньшей
+длины, например, "re,'' не приводит к неопределенности, поскольку воспринимается
+только вторым правилом.
+<p>Принцип предпочтения соответствия наибольшей длины действителен и для
+правил с концевым контекстом. Особенность в том, что длина концевой части
+принимается в расчет, несмотря на то, что эта часть не относится к лексеме
+и будет возвращена на вход.
+<p>Для правил с выражениями типа ".*'' принцип предпочтения наиболее длинного
+соответствия опасен. Например, для выявления строк в одиночных кавычках
+может показаться подходящим следующее решение:
+<p><b>/* ex10.l */</b>
+<br><b>%%</b>
+<br><b>'.*'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Фактически это приглашение к поиску самой дальней закрывающей кавычки.
+Так, при вводе:
+<p>&nbsp;&nbsp;&nbsp;<b> 'first'&nbsp;&nbsp;&nbsp;&nbsp; here,&nbsp;&nbsp;&nbsp;&nbsp;
+'second'&nbsp;&nbsp;&nbsp;&nbsp; there</b>
+<p>будет выявлено:
+<p>&nbsp;&nbsp;<b>&nbsp; 'first'&nbsp; here,&nbsp; 'second'</b>
+<p>Последствия таких ошибок смягчаются тем обстоятельством, что ".'' не
+означает новую строку. Поэтому сопоставление ".*'' ограничено текущей входной
+строкой. Обход этого ограничения при помощи шаблона (.|\n)+ приведет к
+бесконечному сопоставлению.
+<p>Решение задачи предыдущего примера следующее:
+<p><b>/* ex11.l */</b>
+<br><b>%%</b>
+<br><b>'[^'\n]*'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p><a NAME="start"></a><font size=+1>4.3.2. Стартовые условия</font>
+<p>Стартовые условия позволяют изменить набор действующих правил в процессе
+работы лексического анализатора. Посредством стартовых условий лексический
+анализатор адаптируется к изменению контекста.
+<p>Изменение окружающей обстановки, в приниципе, может быть учтено тремя
+способами:
+<p>- применение флагов, когда меняются лишь некоторые правила;
+<br>- использование стартовых условий, наложенных на правила;
+<br>- переключение между несколькими программами лексических анализаторов
+(в рамках этой работы не обсуждается).
+<p>Рассмотрим следующую задачу: копировать входной поток, заменяя "magic''
+на "first'' в строках, начинающихся с "a'', или на "second'' в строках,
+начинающихся с "b'', или на "third'', если строка начинается с "c''. Эти
+правила настолько просты, что можно применить первый способ:
+<p><b>/* ex12_1.l */</b>
+<br><b>&nbsp;&nbsp;&nbsp; int flag;</b>
+<br><b>%%</b>
+<br><b>^a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ flag = 'a'; ECHO; }</b>
+<br><b>^b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ flag = 'b'; ECHO; }</b>
+<br><b>^c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ flag = 'c'; ECHO; }</b>
+<br><b>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ flag = 0 ; ECHO; }</b>
+<br><b>magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ switch (flag)</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 'a': printf("&lt;first>"); break;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 'b': printf("&lt;second>"); break;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 'c': printf("&lt;third>"); break;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+default : ECHO;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Первые четыре правила можно сократить:
+<p><b>/* ex12_2.l */</b>
+<br><b>&nbsp;&nbsp;&nbsp; int flag;</b>
+<br><b>%%</b>
+<br><b>^[abc]&nbsp;&nbsp;&nbsp;&nbsp; |</b>
+<br><b>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ flag = yytext[0] ; ECHO; }</b>
+<br><b>magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ switch (flag)</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 'a': printf("&lt;first>"); break;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 'b': printf("&lt;second>"); break;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 'c': printf("&lt;third>"); break;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+default : ECHO;</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</b>
+<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+}</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Чтобы решить эту задачу с применением стартовых условий, условия прежде
+всего должны быть перечислены в секции определений:
+<p><b>&nbsp;&nbsp;&nbsp; %start</b> <i>cond1, cond2, ...</i>
+<p>Можно сократить "%start'' как "%s''. На условие в дальнейшем можно ссылаться
+в начале правил, задавая имя условия в угловых скобках. Такая запись как:
+<p>&nbsp;&nbsp;&nbsp; &lt;cond>шаблон
+<p>означает, что правило распознается только тогда, когда текущее стартовое
+условие анализатора - cond. Для установки требуемого стартового условия
+(например, cond) используется макрокоманда:
+<p><b>&nbsp;&nbsp;&nbsp; BEGIN</b> <b>(</b><i>cond</i><b>);</b>
+<p>(Скобки можно опустить.) Исходное (нулевое) стартовое условие восстанавливается
+следующим образом:
+<p><b>&nbsp;&nbsp;&nbsp; BEGIN (INITIAL);</b>
+<p>Правило может быть активным при нескольких стартовых условиях, что задается
+префиксом в виде списка:
+<p><i>&nbsp;&nbsp;&nbsp; &lt;cond1, ....., condN></i>
+<p>Правила без стартового условия активны всегда.
+<p>Решение примера с использованием стартовых условий:
+<p><b>/* ex13_1.l */</b>
+<br><b>%START AA BB CC</b>
+<br><b>%%</b>
+<br><b>^a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ ECHO; BEGIN AA; }</b>
+<br><b>^b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ ECHO; BEGIN BB; }</b>
+<br><b>^c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ ECHO; BEGIN CC; }</b>
+<br><b>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ ECHO; BEGIN 0; }</b>
+<br><b>&lt;AA>magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "&lt;first>" );</b>
+<br><b>&lt;BB>magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "&lt;second>" );</b>
+<br><b>&lt;CC>magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "&lt;third>" );</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>На уровне реализации стартовые условия представлены целыми значениями
+(в частности, исходное условие INITIAL обозначается также как 0). Это обстоятельство
+дает возможность производить вычисления над стартовыми условиями, а также
+проводить трассировку стартовых условий, как в следующем варианте решения:
+<p><b>/* ex13_2.l */</b>
+<br><b>%S AA BB CC</b>
+<br><b>%{</b>
+<br><b>#define YY_USER_ACTION { printf("(%d)", YYSTATE); }</b>
+<br><b>%}</b>
+<br><b>%%</b>
+<br><b>^[abc]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ ECHO; BEGIN( yytext[0]-'a'+1 ); }</b>
+<br><b>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ ECHO; BEGIN( 0 ); }</b>
+<br><b>&lt;AA>magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "&lt;first>" );</b>
+<br><b>&lt;BB>magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "&lt;second>" );</b>
+<br><b>&lt;CC>magic&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+printf( "&lt;third>" );</b>
+<br><b>%%</b>
+<br><b>#include "yy.c"</b>
+<p>Макроопределение YY_USER_ACTION, по умолчанию пустое, позволяет задать
+действие, которое выполняется перед действием любого правила. Макрокоманда
+YYSTATE возвращает целочисленное значение текущего стартового условия.
+<p>Задание: выясните значения стартовых условий AA, BB, CC.
+<p><a NAME="reject"></a><font size=+1>4.3.3. Действие REJECT</font>
+<p>Логика лексического анализатора, сгенерированного Lex, направлена на
+выявление смежных последовательностей во входном потоке. Выявление перекрывающихся
+последовательностей требует программирования дополнительной логики.
+<p>Рассмотрим следующий пример:
+<p><b>/* ex14_1.l0 */</b>
+<br><b>&nbsp;&nbsp;&nbsp; int s = 0, h = 0;</b>
+<br><b>%%</b>
+<br><b>she&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+s++;</b>
+<br><b>he&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+h++;</b>
+<br><b>(.\n)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<br><b>%%</b>
+<br><b>yywrap()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; printf( "she: %d times, he: %d times\n", s, h
+);</b>
+<br><b>&nbsp;&nbsp;&nbsp; return( 1 );</b>
+<br><b>}</b>
+<br><b>main()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; while( yylex() );</b>
+<br><b>}</b>
+<p>Здесь запрограммирован подсчет экземпляров последовательностей "she''
+и "he''. Анализатор не будет распознавать те экземпляры "he'', которые
+находятся внутри "she'', т.к. после распознавания "she'' все эти литеры
+уходят из входной последовательности.
+<p>Для выявления некоторых последовательностей внутри других последовательностей
+(также представляющих интерес) нужно:
+<p>- вернуть принятую последовательность во входной поток;
+<br>- исключить правило, которым была распознана эта последовательность;
+<br>- возобновить сопоставление.
+<p>Первая фаза этого действия может быть реализована вызовом yyless(0),
+вторая - при помощи стартовых условий. Вместе с тем, имеется возможность
+задать это действие одной макрокомандой REJECT.
+<p><b>/* ex14_2.l0 */</b>
+<br><b>&nbsp;&nbsp;&nbsp; int s = 0, h = 0;</b>
+<br><b>%%</b>
+<br><b>she&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ s++; REJECT; }</b>
+<br><b>he&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ h++; REJECT; }</b>
+<br><b>(.\n)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+;</b>
+<br><b>%%</b>
+<br><b>yywrap()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; printf( "she: %d times, he: %d times\n", s, h
+);</b>
+<br><b>&nbsp;&nbsp;&nbsp; return( 1 );</b>
+<br><b>}</b>
+<br><b>main()</b>
+<br><b>{</b>
+<br><b>&nbsp;&nbsp;&nbsp; while( yylex() );</b>
+<br><b>}</b>
+<p>После обнаружения "she'' увеличивается счетчик "s'' и правило отвергается,
+"she'' возвращается на вход. Предпринимается попытка заново сопоставить
+тот же ввод с оставшимися шаблонами. В этом примере можно учесть то, что
+"she'' включает в себя "he'', но не наоборот, и убрать REJECT из второго
+действия. В других случаях невозможно предугадать сколько литер будет распознано
+разными правилами (например, когда в шаблонах задано повторение).
+<p>Например, пусть секция правил содержит:
+<p><b>%%</b>
+<br><b>a[bc]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ action(1) ; REJECT;}</b>
+<br><b>a[cd]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{ action(2) ; REJECT;}</b>
+<br><b>%%</b>
+<p>Ввод "ab'' распознается только первым правилом, а "ad'' - только вторым.
+Во входной последовательности "accb'' первое правило распознает все четыре
+буквы; затем (после REJECT) второе правило распознает три буквы. При вводе
+же "accd'' - наоборот.
+<center>
+<p><a NAME="tasks"></a><b><font size=+1>Программа работы</font></b></center>
+
+<p>1. Протестировать примеры.
+<br>2. Выполнить индивидуальное задание.
+<br>3. Представить отчёт в форме, согласованной с преподавателем.
+<br>&nbsp;
+</body>
+</html>

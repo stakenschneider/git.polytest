@@ -1,0 +1,41 @@
+%% 
+D			[0-9]
+L			[a-zA-Z_]
+
+%{ 
+#include <stdlib.h> 
+#include "individ.tab.h" 
+%} 
+
+%%
+"char"			{ return CHAR; }
+"do"			{ return DO; }
+"int"			{ return INT; }
+"while"			{ return WHILE; }
+
+{L}({L}|{D})*		{ return IDENTIFIER; }
+{D}+			{ return CONSTANT; }
+
+";"		{ return yytext[0]; }
+"{"		{ return yytext[0]; }
+"}"		{ return yytext[0]; }
+"="		{ return yytext[0]; }
+"("		{ return yytext[0]; }
+")"		{ return yytext[0]; }
+"["		{ return yytext[0]; }
+"]"		{ return yytext[0]; }
+"-"		{ return yytext[0]; }
+"+"		{ return yytext[0]; }
+"*"		{ return yytext[0]; }
+"/"		{ return yytext[0]; }
+
+[ \t\n\r]+		;
+.			{return 0;}
+
+%%
+
+yywrap()
+{
+	return(1);
+}
+

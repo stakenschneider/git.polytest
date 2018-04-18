@@ -1,0 +1,24 @@
+    mov ax, hey
+L11:
+    mov bx, 1
+    cmp ax, bx
+    jne L12
+    mov id1, id2
+    mov ax, hello
+    mul ax, 3
+    sub ax, 5
+L22:
+    mov bx, 1
+    cmp ax, bx
+    jne L23
+    mov id2, 4
+L23:
+    jmp end
+L12:
+    mov bx, 2
+    cmp ax, bx
+    jne L13
+    mov counter, 3
+L13:
+    jmp end
+end:

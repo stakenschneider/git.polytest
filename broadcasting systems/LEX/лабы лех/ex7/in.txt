@@ -1,0 +1,11 @@
+/*True*/
+id1 7
+id2 3Fh
+8
+3Fh
+0F5h
+
+/*False*/
+id4Bh
+A4h
+id4 A4h

@@ -1,0 +1,12 @@
+/* ex13_1.l */
+%START AA BB CC
+%%
+^a                         { ECHO; BEGIN AA; }
+^b                         { ECHO; BEGIN BB; }
+^c                         { ECHO; BEGIN CC; }
+\n                          { ECHO; BEGIN 0; }
+<AA>magic          printf( "<first>" );
+<BB>magic          printf( "<second>" );
+<CC>magic          printf( "<third>" );
+%%
+#include "yy.c"  

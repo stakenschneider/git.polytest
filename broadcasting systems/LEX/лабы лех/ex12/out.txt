@@ -1,0 +1,5 @@
+autor <first>
+add maggd
+centr <third>
+b is <second>
+B magic

@@ -1,0 +1,16 @@
+%{
+#include <stdlib.h>
+#include "y.tab.h"
+
+#define YYSTYPE int
+extern YYSTYPE yylval;    /* value of numeric token */
+%}
+
+%%
+[0-9]+          { yylval = atoi(yytext);
+                        return NUM; }
+
+[ \t\n]+        ;
+.          return yytext[0];
+%%
+yywrap() { return 1; }

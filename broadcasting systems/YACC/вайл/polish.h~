@@ -1,0 +1,6 @@
+#ifndef _POLISH_H_
+#define _POLISH_H_
+#include <string.h>
+#include <stdio.h>
+
+#endif

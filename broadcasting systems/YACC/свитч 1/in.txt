@@ -1,0 +1,16 @@
+switch(hey)
+{
+	case 1:
+		id1 = id2;
+		switch(hello*3-5)
+		{
+			case 1:
+				id2 = 4;
+			break;				
+		}		
+	break;
+	
+	case 2:
+		counter = 3;
+	break;
+}

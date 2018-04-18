@@ -1,0 +1,41 @@
+   0  $accept : date $end
+
+   1  date : MONTH NUMBER NUMBER
+
+state 0
+	$accept : . date $end  (0)
+
+	MONTH  shift 1
+	.  error
+
+	date  goto 2
+
+
+state 1
+	date : MONTH . NUMBER NUMBER  (1)
+
+	NUMBER  shift 3
+	.  error
+
+
+state 2
+	$accept : date . $end  (0)
+
+	$end  accept
+
+
+state 3
+	date : MONTH NUMBER . NUMBER  (1)
+
+	NUMBER  shift 4
+	.  error
+
+
+state 4
+	date : MONTH NUMBER NUMBER .  (1)
+
+	.  reduce 1
+
+
+4 terminals, 2 nonterminals
+2 grammar rules, 5 states

@@ -1,0 +1,3 @@
+identifier: ready
+operation: read
+identifier: readread

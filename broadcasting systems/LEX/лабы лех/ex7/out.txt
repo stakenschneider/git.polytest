@@ -1,0 +1,22 @@
+
+ident: id1
+decimal: 7
+
+ident: id2
+hex: 3Fh
+
+decimal: 8
+
+hex: 03Fh
+
+hex: 0F5h
+
+
+
+ident: id4Bh
+
+ident: A4h
+
+ident: id4
+ident: A4h
+
