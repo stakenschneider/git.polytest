@@ -1,0 +1,25 @@
+    mov k, 0
+F1:
+    mov ax, k
+    cmp ax, 10
+    je D1
+D1
+    add k, 1
+    lea a, mass
+    mov cx, len
+    xor ax, ax
+M0:
+     inc bx
+    loop M0
+    lea b, mass
+    mov cx, len
+    xor ax, ax
+M1:
+     inc bx
+    loop M1
+    lea s, mass
+    mov cx, len
+    xor ax, ax
+M2:
+     inc bx
+    loop M2

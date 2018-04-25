@@ -1,0 +1,16 @@
+D1:
+    mov dasd, 22
+    mov a, b
+D2:
+    mov dasd, 22
+    mov ax, poom
+    cmp ax, 3
+    jg D2
+    mov ax, poom
+    cmp ax, 3
+    jg D1
+D3:
+    mov dasd, 22
+    mov ax, poom
+    cmp ax, 3
+    jg D3

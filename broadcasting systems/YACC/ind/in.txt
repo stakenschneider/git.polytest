@@ -1,0 +1,5 @@
+for ( k = 0 ; k != 10; k++) {
+a = mass[4];
+b = mass[4];
+s = mass[5];
+}
