@@ -1,13 +1,7 @@
-do{ 
-dasd = 22;
-a = b;
-do{ 
-dasd = 22;
- } while (poom >= 3)
-
- } while (poom >= 3)
-
-
-do{ 
-dasd = 22;
- } while (poom >= 3)
+do{
+a = b + 2;
+c = d * a;
+b = a-c;
+z = 2/3;
+d = b;
+} while (t >= 3)

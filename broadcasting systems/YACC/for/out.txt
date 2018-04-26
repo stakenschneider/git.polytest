@@ -1,39 +1,35 @@
-    mov k, 0
+    mov i, 0
 F1:
-    mov ax, k
+    mov ax, i
     cmp ax, 10
     je D1
 D1
-    add k, 1
-    lea a, mass
-    mov cx, len
-    xor ax, ax
-cikl:
-     inc bx
-    loop cikl
-    mov k, 0
-F2:
+    add i, 1
+    lea bx, mass
+    add bx, [5]
+    mov a, [bx]
+    loop F1
+    mov k, 6
+F1:
     mov ax, k
-    cmp ax, 10
-    je D2
+    cmp ax, 3
+    jl D2
 D2
-    add k, 1
-    lea a, mass
-    mov cx, len
-    xor ax, ax
-cikl:
-     inc bx
-    loop cikl
-    mov k, 0
-F3:
-    mov ax, k
-    cmp ax, 10
-    je D3
+    sub k, 1
+    mov b, 5
+    loop F1
+    mov c, b
+    loop F0
+    loop F-1
+    mov z, 2
+F0:
+    mov ax, z
+    cmp ax, 1
+    jne D3
 D3
-    add k, 1
-    lea a, mass
-    mov cx, len
-    xor ax, ax
-cikl:
-     inc bx
-    loop cikl
+    sub k, 1
+    lea bx, qwe
+    add bx, [23]
+    mov a, [bx]
+    loop F0
+    loop F-1

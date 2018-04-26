@@ -1,16 +1,13 @@
-D1:
-    mov dasd, 22
+    D1:
     mov a, b
-D2:
-    mov dasd, 22
-    mov ax, poom
-    cmp ax, 3
-    jg D2
-    mov ax, poom
+    add a, 2
+    mov c, d
+    mul ax, a
+    mov b, a
+    sub ax, c
+    mov z, 2
+    div ax, 3
+    mov d, b
+    mov ax, t
     cmp ax, 3
     jg D1
-D3:
-    mov dasd, 22
-    mov ax, poom
-    cmp ax, 3
-    jg D3

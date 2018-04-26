@@ -9,6 +9,7 @@
     extern int yydebug;
     int count = 0;
     int count2 = 1;
+        int m = 0;
     %}
 
 %token  FOR
@@ -35,6 +36,8 @@ cond : exp1 ';'  exp2  ';' exp3
 
 ind_t      :    NUM {$<cval>$ = $<cval>1;};
 ind        :    NAME {$<cval>$ = $<cval>1;};
+mass        :    NAME {$<cval>$ = $<cval>1;};
+
 iii        :    NAME {$<cval>$ = $<cval>1;};
 iii        :    NUM {$<cval>$ = $<cval>1;};
 
@@ -87,14 +90,17 @@ bexp : const;
 const: ind '=' iii ';'{
     printf("    mov %s, %s\n", $<cval>1, $<cval>3);
     printf("    loop F%d\n", count);
+    count--;
+    if (count != 0){printf("    loop F%d\n", count);}
 };
 
-const        :   ind '=' iii '[' ind_t ']' ';'{
-    printf("    lea %s, %s\n", $<cval>1,$<cval>3);
-    printf("    mov cx, len\n");
-    printf("    xor ax, ax\n");
-    printf("cikl:\n     inc bx\n");
-    printf("    loop cikl\n");
+const        :   ind '=' mass '[' ind_t ']' ';'{
+    printf("    lea bx, %s\n", $<cval>3); //
+    printf("    add bx, [%s]\n",  $<cval>5);
+    printf("    mov %s, [bx]\n",  $<cval>1);
+    printf("    loop F%d\n", count);
+    count--;
+    if (count != 0){printf("    loop F%d\n", count);}
 };
 
 %%
