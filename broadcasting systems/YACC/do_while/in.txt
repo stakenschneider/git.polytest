@@ -5,3 +5,13 @@ b = a-c;
 z = 2/3;
 d = b;
 } while (t >= 3)
+
+do{
+a1 = a2;
+} while (a1 < 2)
+
+do{
+do{
+b = b + c;
+} while (k != 12)
+} while (b == 13)

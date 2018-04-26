@@ -11,3 +11,18 @@
     mov ax, t
     cmp ax, 3
     jg D1
+    D1:
+    mov a1, a2
+    mov ax, a1
+    cmp ax, 2
+    jge D1
+    D1:
+    D2:
+    mov b, b
+    add b, c
+    mov ax, k
+    cmp ax, 12
+    je D2
+    mov ax, b
+    cmp ax, 13
+    jne D1
