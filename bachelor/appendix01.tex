@@ -1,0 +1,77 @@
+\chapter{Настройка рабочей среды}
+
+
+
+Установка Python.
+\begin{lstlisting}
+sudo apt-get install python3
+\end{lstlisting}
+
+
+Установка для CPU.
+Установка TensorFlow:
+ \begin{lstlisting}
+ pip install --ignore-installed --upgrade tensorflow
+\end{lstlisting}
+
+Для проверки корректности установки TensorFlow, запустите python и выполните программу:
+ \begin{lstlisting}
+ import tensorflow as tf
+ hello = tf.constant('Hello, TensorFlow!')
+ sess = tf.Session()
+ print(sess.run(hello))
+\end{lstlisting}
+ 
+В результате должно быть напечатано:
+ \begin{lstlisting}
+ b'Hello, TensorFlow!'
+ \end{lstlisting}
+ 
+Установка для GPU.
+
+Замечание! TensorFlow поддерживает GPU компании NVIDIA с CUDA Compute Capability 3.5 и выше. Видеокарты AMD и других производителей для TensorFlow не подходят.
+
+Установка TensorFlow:
+ \begin{lstlisting}
+ pip install --upgrade tensorflow-gpu
+\end{lstlisting}
+
+Проверка установки. Для проверки корректности установки TensorFlow, запустите python и выполните программу:
+ \begin{lstlisting}
+ import tensorflow as tf
+ tf.test.gpu_device_name()
+\end{lstlisting}
+
+Установка Keras.
+
+Замечание! Начиная с версии 1.4 TensorFlow включает Keras. Поэтому отдельно устанавливать Keras не обязательно:
+pip install keras 
+
+
+Установка Jupyter Notebook.
+
+
+Разверните среду разработки Python 3, в которую вы хотите установить Jupyter Notebook (в данном руководстве среда условно называется "my _env").
+
+ \begin{lstlisting}
+cd ~/environments
+
+. my_env/bin/activate
+\end{lstlisting}
+
+
+Затем нужно обновить pip:
+ \begin{lstlisting}
+pip install --upgrade pip
+\end{lstlisting}
+Чтобы установить Jupyter Notebook, запустите:
+ \begin{lstlisting}
+pip install jupyter
+\end{lstlisting}
+
+Для того что бы запустить jupyter notebook, достаточно ввести в терминале 
+ \begin{lstlisting}
+jupyter notebook
+\end{lstlisting}
+
+Также можно ввести в строку браузера адрес http://localhost:8080 (по умолчанию).

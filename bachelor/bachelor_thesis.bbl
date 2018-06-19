@@ -1,0 +1,83 @@
+\begin{thebibliography}{10}
+\def\selectlanguageifdefined#1{
+\expandafter\ifx\csname date#1\endcsname\relax
+\else\selectlanguage{#1}\fi}
+\providecommand*{\href}[2]{{\small #2}}
+\providecommand*{\url}[1]{{\small #1}}
+\providecommand*{\BibUrl}[1]{\url{#1}}
+\providecommand{\BibAnnote}[1]{}
+\providecommand*{\BibEmph}[1]{#1}
+\ProvideTextCommandDefault{\cyrdash}{\hbox to.8em{--\hss--}}
+\providecommand*{\BibDash}{\ifdim\lastskip>0pt\unskip\nobreak\hskip.2em\fi
+\cyrdash\hskip.2em\ignorespaces}
+
+\bibitem{caffe_doc}
+\selectlanguageifdefined{english}
+Caffe DocumentationElectronic resource. \BibDash
+\newblock URL: \BibUrl{http://caffe.berkeleyvision.org}.
+
+\bibitem{deeplearning4j_doc}
+\selectlanguageifdefined{english}
+Deeplearning4j DocumentationElectronic resource. \BibDash
+\newblock URL: \BibUrl{https://deeplearning4j.org/documentation}.
+
+\bibitem{dlib_doc}
+\selectlanguageifdefined{english}
+Dlib DocumentationElectronic resource. \BibDash
+\newblock URL: \BibUrl{http://dlib.net}.
+
+\bibitem{Keras_doc}
+\selectlanguageifdefined{english}
+Keras DocumentationElectronic resource. \BibDash
+\newblock URL: \BibUrl{https://keras.io}.
+
+\bibitem{cntk_doc}
+\selectlanguageifdefined{english}
+CNTK DocumentationElectronic resource. \BibDash
+\newblock URL:
+  \BibUrl{https://github.com/Microsoft/CNTK/tree/master/Documentation}.
+
+\bibitem{mxnet_doc}
+\selectlanguageifdefined{english}
+Mxnet DocumentationElectronic resource. \BibDash
+\newblock URL: \BibUrl{https://mxnet.incubator.apache.org/faq/why_mxnet.html}.
+
+\bibitem{ND_doc}
+\selectlanguageifdefined{english}
+Neural Designer IntroductionElectronic resource. \BibDash
+\newblock URL: \BibUrl{https://www.neuraldesigner.com}.
+
+\bibitem{opennn_doc}
+\selectlanguageifdefined{english}
+opennn DocumentationElectronic resource, Документация opennn.
+  \BibDash
+\newblock URL: \BibUrl{http://www.opennn.net/documentation/}.
+
+\bibitem{tf_doc}
+\selectlanguageifdefined{english}
+Tensorflow DocumentationElectronic resource. \BibDash
+\newblock URL: \BibUrl{https://www.tensorflow.org/api_docs/}.
+
+\bibitem{Theano_doc}
+\selectlanguageifdefined{english}
+Theano DocumentationElectronic resource. \BibDash
+\newblock URL: \BibUrl{http://deeplearning.net/software/theano/}.
+
+\bibitem{torch_doc}
+\selectlanguageifdefined{english}
+Torch DocumentationElectronic resource. \BibDash
+\newblock URL: \BibUrl{http://torch.ch/docs/getting-started.html}.
+
+\bibitem{McCulloch}
+\selectlanguageifdefined{english}
+\BibEmph{McCulloch~W.S.~Pitts~W.} A Logical Calculus of the Ideas Immanent in
+  Nervous Activity. \BibDash
+\newblock The Bulletin of Mathematical Biophysics, 1943. \BibDash
+\newblock 133~p.
+
+\bibitem{NVIDIA}
+\selectlanguageifdefined{english}
+NVIDIAElectronic resource. \BibDash
+\newblock URL: \BibUrl{https://www.nvidia.ru/deep-learning-ai/education/}.
+
+\end{thebibliography}

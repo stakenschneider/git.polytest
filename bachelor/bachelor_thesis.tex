@@ -1,0 +1,46 @@
+\input{preamble}
+
+\begin{document}
+
+\input{settings}
+
+%\listoftodos
+%\clearpage
+
+\input{title}
+
+\makecover
+\maketitle
+
+% Эта страница специально оставлена пустой.
+\newpage\null\thispagestyle{empty}\newpage
+
+\input{abstract}
+
+ \makeabstractru 
+%\makeabstract % Двуязычный
+
+% Эта страница специально оставлена пустой.
+\newpage\null\thispagestyle{empty}\newpage
+
+\tableofcontents
+
+\makenomenclature
+\printnomenclature
+
+\input{glossary}
+\input{introduction}  	%  Введение
+\input{analysis} 			% Обзор
+\input{task} 					%  Анализ
+\input{architecture} 		% Реализация комплекса
+\input{testing} 	     		%  Апробация
+\input{conclusion} 		%  заключение
+
+
+\bibliography{thesis}
+\bibliographystyle{ugost2008}
+
+\appendix
+\input{appendix01}
+\input{appendix02}
+\end{document}
