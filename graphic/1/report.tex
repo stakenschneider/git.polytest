@@ -1,0 +1,132 @@
+\documentclass[14pt,a4paper,report]{report}
+\usepackage[a4paper, mag=1000, left=2.5cm, right=1cm, top=2cm, bottom=2cm, headsep=0.7cm, footskip=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks]{hyperref}
+\usepackage{listings} 
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{graphicx}
+\hypersetup{
+	colorlinks = true,
+	linkcolor  = black
+}
+
+\usepackage{titlesec}
+\titleformat{\chapter}
+{\Large\bfseries} % format
+{}                % label
+{0pt}             % sep
+{\huge}           % before-code
+
+
+\DeclareCaptionFont{white}{\color{white}} 
+
+% Listing description
+\usepackage{listings} 
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\lstset{ 
+	% Listing settings
+	inputencoding = utf8,			
+	extendedchars = \true, 
+	keepspaces = true, 			  	 % Поддержка кириллицы и пробелов в комментариях
+	language = C,            	 	 % Язык программирования (для подсветки)
+	basicstyle = \small\sffamily, 	 % Размер и начертание шрифта для подсветки кода
+	numbers = left,               	 % Где поставить нумерацию строк (слева\справа)
+	numberstyle = \tiny,          	 % Размер шрифта для номеров строк
+	stepnumber = 1,               	 % Размер шага между двумя номерами строк
+	numbersep = 5pt,              	 % Как далеко отстоят номера строк от подсвечиваемого кода
+	backgroundcolor = \color{white}, % Цвет фона подсветки - используем \usepackage{color}
+	showspaces = false,           	 % Показывать или нет пробелы специальными отступами
+	showstringspaces = false,    	 % Показывать или нет пробелы в строках
+	showtabs = false,           	 % Показывать или нет табуляцию в строках
+	frame = single,              	 % Рисовать рамку вокруг кода
+	tabsize = 2,                  	 % Размер табуляции по умолчанию равен 2 пробелам
+	captionpos = t,             	 % Позиция заголовка вверху [t] или внизу [b] 
+	breaklines = true,           	 % Автоматически переносить строки (да\нет)
+	breakatwhitespace = false,   	 % Переносить строки только если есть пробел
+	escapeinside = {\%*}{*)}      	 % Если нужно добавить комментарии в коде
+}
+
+\begin{document}
+
+\def\contentsname{Содержание}
+
+% Titlepage
+\begin{titlepage}
+	\begin{center}
+		\textsc{Санкт-Петербургский Политехнический 
+			Университет Петра Великого\\[5mm]
+			Кафедра компьютерных систем и программных технологий}
+		
+		\vfill
+		
+		\textbf{Отчёт по лабораторной работе №1\\
+		"Определение векторов смещения"\\[3mm]
+			Курс: «Разработка графических приложений»\\[41mm]
+		}
+	\end{center}
+	
+	\hfill
+	\begin{minipage}{.4\textwidth}
+		Выполнил студент:\\[2mm] 
+		Волкова М.Д.\\
+		Группа: 13541/2\\[5mm]
+		
+		Проверил:\\[2mm] 
+		Абрамов Н.А.
+	\end{minipage}
+	\vfill
+	\begin{center}
+		Санкт-Петербург\\ \the\year\ г.
+	\end{center}
+\end{titlepage}
+
+% Contents
+\tableofcontents
+\clearpage
+
+\chapter{Лабораторная работа №1}
+
+\section{Цель работы}
+
+Реализовать алгоритм поиска векторов смещения на изображения, используя метрику SAD. 
+
+\section{Описание алгоритма поиска смещения на изображении}
+
+\begin{enumerate}
+\item Выбор двух последовательных изображений
+\item Разбиение изображения на блоки 8x8 пикселей
+\item Поиск похожих блоков первого изображения во втором с помощью метрики SAD в окрестности 16х16 пикселей методом полного перебора
+\item Визуализация векторов смещения, наложенных на исходное изображение
+\end{enumerate}
+
+\section{Эксперименты}
+\begin{enumerate}
+	\item Нахождение и отображение векторов смещения на изображениях:
+	\item Два последовательных кадра из нескольких роликов
+	\item Смещение изображение вправо 
+\end{enumerate}
+
+\clearpage
+
+\section{Результаты}
+Рассмотрим эксперимент, в котором будем определять вектора смещений для 2 последовательных изображений. 
+
+\section{Вывод}
+С помощью данного алгоритма возможно качественно определить вектора смещения на изображении. 
+
+Однако на этапе выбора материалов для проведения экспериментов, было выявлено, что на однородных участках изображений однозначно определить вектор смещения не удается. 
+
+Также следует отметить, что и после выбора материалов экспериментов однородность изображения сказывалась на результате, в каждом из продемонстрированных можно увидеть недостатки связанные с однородностью изображения. Тем не менее не следует признавать данные недостатки критическими.
+
+Неприемлемые результаты расчета векторов смещения объясняются тем, что возможно исчезновение частей изображения от кадра к кадру, именно под эту ситуацию подходят в частности границы. 
+	
+\chapter{Листинг}
+	
+\lstinputlisting{code/main.cpp}
+
+\end{document}

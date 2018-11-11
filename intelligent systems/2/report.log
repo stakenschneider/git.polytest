@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.12.26)  18 OCT 2018 11:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.12.26)  19 OCT 2018 23:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1130,144 +1130,104 @@ Package babel Info: Redefining russian shorthand "|
 Package babel Info: Redefining russian shorthand "~
 (babel)             in language  on input line 153.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 175.
+(babel)             in language  on input line 173.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 175.
+(babel)             in language  on input line 173.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 175.
+(babel)             in language  on input line 173.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 175.
+(babel)             in language  on input line 173.
  [3
 
  <./images/mindmap.jpg>]
 <images/tree.jpg, id=105, 542.025pt x 614.295pt>
 File: images/tree.jpg Graphic file (type jpg)
  <use images/tree.jpg>
-Package pdftex.def Info: images/tree.jpg used on input line 185.
-(pdftex.def)             Requested size: 325.2175pt x 368.57983pt.
+Package pdftex.def Info: images/tree.jpg used on input line 187.
+(pdftex.def)             Requested size: 379.4149pt x 430.00356pt.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 190.
+(babel)             in language  on input line 192.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 190.
+(babel)             in language  on input line 192.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 190.
+(babel)             in language  on input line 192.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 190.
+(babel)             in language  on input line 192.
  [4 <./images/tree.jpg>]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 228.
+(babel)             in language  on input line 230.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 228.
+(babel)             in language  on input line 230.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 236.
+(babel)             in language  on input line 238.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 236.
+(babel)             in language  on input line 238.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 248.
+(babel)             in language  on input line 250.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 248.
+(babel)             in language  on input line 250.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 255.
+(babel)             in language  on input line 257.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 255.
+(babel)             in language  on input line 257.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 255.
+(babel)             in language  on input line 257.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 255.
+(babel)             in language  on input line 257.
  [5
 
 ]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 261.
+(babel)             in language  on input line 263.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 261.
+(babel)             in language  on input line 263.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 261.
+(babel)             in language  on input line 263.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 261.
+(babel)             in language  on input line 263.
  [6]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 263.
+(babel)             in language  on input line 265.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 263.
+(babel)             in language  on input line 265.
 
-Overfull \hbox (20.48738pt too wide) in paragraph at lines 273--274
- []|\T2A/cmr/m/n/10 —сылка| 
- []
-
-
-Overfull \hbox (17.79848pt too wide) in paragraph at lines 284--285
+Overfull \hbox (3.5721pt too wide) in paragraph at lines 286--287
  []|\T2A/cmr/m/n/10 ёриспруденци€ 
  []
 
 
-Overfull \hbox (1.3254pt too wide) in paragraph at lines 288--288
- []|\T2A/cmr/m/n/10 [10]| 
- []
-
-
-Overfull \hbox (1.3254pt too wide) in paragraph at lines 290--290
- []|\T2A/cmr/m/n/10 [11]| 
- []
-
-
-Overfull \hbox (1.3254pt too wide) in paragraph at lines 295--295
- []|\T2A/cmr/m/n/10 [12]| 
- []
-
-
-Overfull \hbox (1.3254pt too wide) in paragraph at lines 297--297
- []|\T2A/cmr/m/n/10 [14]| 
- []
-
-
-Overfull \hbox (1.3254pt too wide) in paragraph at lines 302--302
- []|\T2A/cmr/m/n/10 [15]| 
- []
-
-
-Overfull \hbox (1.3254pt too wide) in paragraph at lines 304--304
- []|\T2A/cmr/m/n/10 [16]| 
- []
-
-
-Overfull \hbox (1.3254pt too wide) in paragraph at lines 311--311
- []|\T2A/cmr/m/n/10 [19]| 
- []
-
-
-Overfull \hbox (21.54715pt too wide) in paragraph at lines 271--316
+Overfull \hbox (21.54716pt too wide) in paragraph at lines 273--318
  [][] 
  []
 
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 320.
+(babel)             in language  on input line 322.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 320.
+(babel)             in language  on input line 322.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 324.
+(babel)             in language  on input line 325.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 324.
+(babel)             in language  on input line 325.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 324.
+(babel)             in language  on input line 325.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 324.
+(babel)             in language  on input line 325.
 [7
 
 ]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 324.
+(babel)             in language  on input line 326.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 324.
+(babel)             in language  on input line 326.
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 324.
+(babel)             in language  on input line 326.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 324.
+(babel)             in language  on input line 326.
  [8]
 Package babel Info: Redefining russian shorthand "|
-(babel)             in language  on input line 326.
+(babel)             in language  on input line 328.
 Package babel Info: Redefining russian shorthand "~
-(babel)             in language  on input line 326.
+(babel)             in language  on input line 328.
 
 
 Package caption Warning: Unused \captionsetup[lstlisting] on input line 35.
@@ -1291,10 +1251,6 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 366.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 366.
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 4F6107A4B68B0E142D6D982600E6FC35;1872.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 366.
  ) 
 Here is how much of TeX's memory you used:
@@ -1313,7 +1269,7 @@ sr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr
 ocal/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb></usr/loc
 al/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfcc1000.pfb></usr/local
 /texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on report.pdf (10 pages, 255148 bytes).
+Output written on report.pdf (10 pages, 254245 bytes).
 PDF statistics:
  174 PDF objects out of 1000 (max. 8388607)
  150 compressed objects within 2 object streams
