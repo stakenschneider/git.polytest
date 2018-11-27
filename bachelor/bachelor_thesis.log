@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.12.26)  19 JUN 2018 21:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.12.26)  21 NOV 2018 03:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1983,33 +1983,33 @@ Underfull \hbox (badness 1596) in paragraph at lines 151--152
 ных "monthly milk
  []
 
-<fig/milk.png, id=479, 1112.155pt x 378.41376pt>
+<fig/milk.png, id=478, 1112.155pt x 378.41376pt>
 File: fig/milk.png Graphic file (type png)
  <use fig/milk.png>
 Package pdftex.def Info: fig/milk.png used on input line 155.
 (pdftex.def)             Requested size: 223.06863pt x 75.89505pt.
  [40]
-<fig/predict.png, id=486, 996.72375pt x 318.18875pt>
+<fig/predict.png, id=485, 996.72375pt x 318.18875pt>
 File: fig/predict.png Graphic file (type png)
  <use fig/predict.png>
 Package pdftex.def Info: fig/predict.png used on input line 172.
 (pdftex.def)             Requested size: 223.06863pt x 71.21066pt.
 )
 (./testing.tex [41 <./fig/milk.png> <./fig/predict.png>]
-<fig/san.png, id=497, 293.095pt x 307.1475pt>
+<fig/san.png, id=496, 293.095pt x 307.1475pt>
 File: fig/san.png Graphic file (type png)
  <use fig/san.png>
 Package pdftex.def Info: fig/san.png used on input line 13.
 (pdftex.def)             Requested size: 223.06863pt x 233.76259pt.
 
-<fig/outsan.png, id=498, 337.26pt x 240.9pt>
+<fig/outsan.png, id=497, 337.26pt x 240.9pt>
 File: fig/outsan.png Graphic file (type png)
  <use fig/outsan.png>
 Package pdftex.def Info: fig/outsan.png used on input line 22.
 (pdftex.def)             Requested size: 223.06863pt x 159.33633pt.
  [42
 
- <./fig/san.png>] <fig/weig.png, id=505, 346.29375pt x 246.9225pt>
+ <./fig/san.png>] <fig/weig.png, id=504, 346.29375pt x 246.9225pt>
 File: fig/weig.png Graphic file (type png)
  <use fig/weig.png>
 Package pdftex.def Info: fig/weig.png used on input line 29.
@@ -2018,25 +2018,25 @@ Package pdftex.def Info: fig/weig.png used on input line 29.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [43 <./fig/outsan.png> <./fig/weig.png>]
-<fig/img3.png, id=514, 1085.05376pt x 504.88625pt>
+<fig/img3.png, id=513, 1085.05376pt x 504.88625pt>
 File: fig/img3.png Graphic file (type png)
  <use fig/img3.png>
 Package pdftex.def Info: fig/img3.png used on input line 41.
 (pdftex.def)             Requested size: 223.06863pt x 103.79509pt.
 
-<fig/kermit.png, id=515, 702.625pt x 471.7625pt>
+<fig/kermit.png, id=514, 702.625pt x 471.7625pt>
 File: fig/kermit.png Graphic file (type png)
  <use fig/kermit.png>
 Package pdftex.def Info: fig/kermit.png used on input line 50.
 (pdftex.def)             Requested size: 223.06863pt x 149.77213pt.
- [44 <./fig/img3.png> <./fig/kermit.png>] <fig/poll.png, id=524, 1003.75pt x 31
+ [44 <./fig/img3.png> <./fig/kermit.png>] <fig/poll.png, id=523, 1003.75pt x 31
 5.1775pt>
 File: fig/poll.png Graphic file (type png)
 
 <use fig/poll.png>
 Package pdftex.def Info: fig/poll.png used on input line 65.
 (pdftex.def)             Requested size: 223.06863pt x 70.0414pt.
- <fig/poll2.png, id=525, 992.70876pt x 311.1625pt>
+ <fig/poll2.png, id=524, 992.70876pt x 311.1625pt>
 File: fig/poll2.png Graphic file (type png)
 
 <use fig/poll2.png>
@@ -2279,7 +2279,7 @@ File: utf8.def 2017/01/28 v1.1t UTF-8 support for inputenc
 )
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2017/01/28 v1.1t UTF-8 support for inputenc
-)) (./appendix02.tex [49] <src/1_Image_Classifie_CIFAR.pdf, id=607, 614.295pt x
+)) (./appendix02.tex [49] <src/1_Image_Classifie_CIFAR.pdf, id=606, 614.295pt x
  794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
@@ -2291,7 +2291,7 @@ File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf used on input line 4.
 (pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
 
-<src/1_Image_Classifie_CIFAR.pdf, id=610, page=1, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=609, page=1, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 1>
@@ -2326,7 +2326,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page1 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [51 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=637, page=2, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=636, page=2, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 2>
@@ -2346,7 +2346,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page2 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [52 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=670, page=3, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=669, page=3, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 3>
@@ -2366,7 +2366,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page3 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [53 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=679, page=4, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=678, page=4, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 4>
@@ -2386,7 +2386,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page4 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [54 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=687, page=5, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=686, page=5, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 5>
@@ -2406,7 +2406,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page5 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [55 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=692, page=6, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=691, page=6, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 6>
@@ -2426,7 +2426,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page6 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [56 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=710, page=7, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=709, page=7, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 7>
@@ -2446,7 +2446,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page7 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [57 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=715, page=8, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=714, page=8, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 8>
@@ -2466,7 +2466,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page8 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [58 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=720, page=9, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=719, page=9, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 9>
@@ -2486,7 +2486,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page9 used on input l
 ine 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [59 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=726, page=10, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=725, page=10, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 10>
@@ -2506,7 +2506,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page10 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [60 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=734, page=11, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=733, page=11, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 11>
@@ -2526,7 +2526,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page11 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [61 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=739, page=12, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=738, page=12, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 12>
@@ -2546,7 +2546,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page12 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [62 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=745, page=13, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=744, page=13, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 13>
@@ -2566,7 +2566,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page13 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [63 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=750, page=14, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=749, page=14, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 14>
@@ -2586,7 +2586,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page14 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [64 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=755, page=15, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=754, page=15, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 15>
@@ -2606,7 +2606,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page15 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [65 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=761, page=16, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=760, page=16, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 16>
@@ -2626,7 +2626,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page16 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [66 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=766, page=17, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=765, page=17, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 17>
@@ -2646,7 +2646,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page17 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [67 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=771, page=18, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=770, page=18, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 18>
@@ -2666,7 +2666,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page18 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [68 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=779, page=19, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=778, page=19, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 19>
@@ -2686,7 +2686,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page19 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [69 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=789, page=20, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=788, page=20, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 20>
@@ -2706,7 +2706,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page20 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [70 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=799, page=21, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=798, page=21, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 21>
@@ -2726,7 +2726,7 @@ Package pdftex.def Info: src/1_Image_Classifie_CIFAR.pdf, page21 used on input
 line 4.
 (pdftex.def)             Requested size: 421.2957pt x 545.2062pt.
  [71 <./src/1_Image_Classifie_CIFAR.pdf>]
-<src/1_Image_Classifie_CIFAR.pdf, id=808, page=22, 614.295pt x 794.97pt>
+<src/1_Image_Classifie_CIFAR.pdf, id=807, page=22, 614.295pt x 794.97pt>
 File: src/1_Image_Classifie_CIFAR.pdf Graphic file (type pdf)
 
 <use src/1_Image_Classifie_CIFAR.pdf, page 22>
@@ -2751,15 +2751,9 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 46.
  (./bachelor_thesis.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 46.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 46.
+Package rerunfilecheck Info: File `bachelor_thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 7DD45913F2399BBD85E488ECBD902F8D;8579.
 
-
-Package rerunfilecheck Warning: File `bachelor_thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `bachelor_thesis.out':
-(rerunfilecheck)             Before: D66A6FB5C9ADBCC9547F91397A2ED507;8579
-(rerunfilecheck)             After:  7DD45913F2399BBD85E488ECBD902F8D;8579.
 
 LaTeX Warning: There were undefined references.
 
@@ -2769,46 +2763,43 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 46.
  ) 
 Here is how much of TeX's memory you used:
- 27604 strings out of 492995
- 468605 string characters out of 6132703
- 568594 words of memory out of 5000000
+ 27603 strings out of 492995
+ 468588 string characters out of 6132703
+ 568593 words of memory out of 5000000
  30329 multiletter control sequences out of 15000+600000
  16588 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  64i,18n,104p,2507b,1489s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{figure.caption.55} has been referenced but does n
-ot exist, replaced by a fixed one
-
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t2a.enc}<
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
-usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/l
-ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loc
-al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
-/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/te
-xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
-e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2017/t
-exmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2017/tex
-mf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2017/texmf
--dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/local/texlive/2017/texmf-d
-ist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2017/texmf-dis
-t/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2017/texmf-dist/
-fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2017/texmf-dist/fo
-nts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist/font
-s/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/
-type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
-pe1/public/cm-super/sftt0800.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
-1/public/cm-super/sftt1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/
-urw/palatino/uplr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/pal
-atino/uplri8a.pfb>
-Output written on bachelor_thesis.pdf (74 pages, 3523455 bytes).
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t2a.enc
+}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/l
+ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
+ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2017/t
+exmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/local/texlive/2017/texmf
+-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2017/texmf-d
+ist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2017/texmf-dis
+t/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2017/texmf-dist/
+fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist/fo
+nts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/font
+s/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/
+type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
+pe1/public/cm-super/sftt1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
+1/urw/palatino/uplr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/p
+alatino/uplri8a.pfb>
+Output written on bachelor_thesis.pdf (74 pages, 3523440 bytes).
 PDF statistics:
- 925 PDF objects out of 1000 (max. 8388607)
- 704 compressed objects within 8 object streams
- 209 named destinations out of 1000 (max. 500000)
+ 924 PDF objects out of 1000 (max. 8388607)
+ 703 compressed objects within 8 object streams
+ 208 named destinations out of 1000 (max. 500000)
  615 words of extra memory for PDF output out of 10000 (max. 10000000)
 
