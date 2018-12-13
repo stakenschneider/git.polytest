@@ -1,2 +1,0 @@
-$ ls -l /etc/shadow
--rw-r----- 1 root shadow 898 Oct  4 16:45 /etc/shadow

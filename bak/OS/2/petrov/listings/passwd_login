@@ -1,8 +1,0 @@
-[ejiek]$ su lab2
-Password: 
-su: Authentication failure
-[ejiek]$ su
-Password: 
-[root]$ su lab2
-[lab2]$ 
-

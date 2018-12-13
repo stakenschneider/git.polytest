@@ -1,5 +1,0 @@
-$ ./mthreads 
-thread1, 0
-thread2, 0
-[1]    30879 user-defined signal 2  ./mthreads
-$ ps -aLf | grep mthreads 

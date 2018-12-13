@@ -1,9 +1,0 @@
-nikita@nikita-pc:~/temp$ gcc -pthread p1.2.1.c -o p1.2.1
-nikita@nikita-pc:~/temp$ ./p1.2.1
-Main thread message.
-Main thread message.
-Signal handle.
-Thread handler message.
-Thread handler message.
-Thread handler message.
-

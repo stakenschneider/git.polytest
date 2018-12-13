@@ -1,5 +1,0 @@
-nikita@nikita-VirtualBox:~$ cat /proc/version
-Linux version 4.4.0-72-generic (buildd@lcy01-17) (gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) ) #93-Ubuntu SMP Fri Mar 31 14:07:41 UTC 2017
-nikita@nikita-VirtualBox:~$ kleopatra --version
-kleopatra 2.2.0
-

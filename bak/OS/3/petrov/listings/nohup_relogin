@@ -1,3 +1,0 @@
-$ ps -ax |grep son
-15095 ?        SN     0:00 ./son3
-
